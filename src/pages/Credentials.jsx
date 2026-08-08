@@ -11,7 +11,7 @@ const Credentials = () => {
       subtitle: 'Securities & Exchange Commission of Pakistan',
       cui: '0260799',
       date: 'June 13, 2024',
-      image: '/licenses/secp_cert.png',
+      image: `${import.meta.env.BASE_URL}licenses/secp_cert.png`,
       details: [
         { label: 'Registration Law', val: 'Companies Act, 2017 (XIX of 2017)' },
         { label: 'Company Type', val: 'Private Limited Company (Limited by Shares)' },
@@ -25,7 +25,7 @@ const Credentials = () => {
       subtitle: 'Government of the Punjab - Home Department',
       cui: 'PSC-11-763',
       date: 'Active Security License',
-      image: '/licenses/punjab_license.png',
+      image: `${import.meta.env.BASE_URL}licenses/punjab_license.png`,
       details: [
         { label: 'License Code', val: 'PSC-11-763 (Punjab)' },
         { label: 'Regulatory Authority', val: 'Punjab Home Department, Lahore' },
@@ -39,7 +39,7 @@ const Credentials = () => {
       subtitle: 'Government of Sindh - Home Department',
       cui: 'SL-332125',
       date: 'Active Security License',
-      image: '/licenses/sindh_license.png',
+      image: `${import.meta.env.BASE_URL}licenses/sindh_license.png`,
       details: [
         { label: 'License Code', val: 'SL-332125 (Sindh)' },
         { label: 'Regulatory Authority', val: 'Sindh Home Department, Karachi' },
