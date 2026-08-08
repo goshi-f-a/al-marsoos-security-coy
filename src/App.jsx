@@ -6,6 +6,9 @@ import Home from './pages/Home';
 import Services from './pages/Services';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
+import CeoMessage from './pages/CeoMessage';
+import Leadership from './pages/Leadership';
+import Credentials from './pages/Credentials';
 
 function App() {
   const [activePage, setActivePage] = useState('home');
@@ -17,6 +20,12 @@ function App() {
         return <Home setActivePage={setActivePage} />;
       case 'services':
         return <Services setActivePage={setActivePage} />;
+      case 'ceo-message':
+        return <CeoMessage />;
+      case 'leadership':
+        return <Leadership />;
+      case 'credentials':
+        return <Credentials />;
       case 'careers':
         return <Careers />;
       case 'contact':

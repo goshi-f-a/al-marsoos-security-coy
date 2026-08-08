@@ -40,22 +40,37 @@ const Footer = ({ setActivePage }) => {
           </h4>
           <ul className="flex flex-col gap-3 text-sm">
             <li>
-              <button onClick={() => handleNavClick('home')} className="hover:text-white transition-colors hover:translate-x-1 duration-200">
+              <button onClick={() => handleNavClick('home')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
                 Home Page
               </button>
             </li>
             <li>
-              <button onClick={() => handleNavClick('services')} className="hover:text-white transition-colors hover:translate-x-1 duration-200">
+              <button onClick={() => handleNavClick('ceo-message')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+                CEO's Message
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavClick('leadership')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+                Our Leadership
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavClick('credentials')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+                Licenses & Credentials
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavClick('services')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
                 Our Services
               </button>
             </li>
             <li>
-              <button onClick={() => handleNavClick('careers')} className="hover:text-white transition-colors hover:translate-x-1 duration-200">
+              <button onClick={() => handleNavClick('careers')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
                 Careers & Join Us
               </button>
             </li>
             <li>
-              <button onClick={() => handleNavClick('contact')} className="hover:text-white transition-colors hover:translate-x-1 duration-200">
+              <button onClick={() => handleNavClick('contact')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
                 Contact & Quote Form
               </button>
             </li>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Logo from './Logo';
-import { Menu, X, Shield, Phone } from 'lucide-react';
+import { Menu, X, Shield, Phone, ChevronDown } from 'lucide-react';
 
 const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,16 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
 
   const navLinks = [
     { id: 'home', label: 'Home' },
+    {
+      id: 'about',
+      label: 'About Us',
+      isDropdown: true,
+      subLinks: [
+        { id: 'ceo-message', label: "CEO's Message" },
+        { id: 'leadership', label: 'Our Leadership' },
+        { id: 'credentials', label: 'Licenses & Credentials' }
+      ]
+    },
     { id: 'services', label: 'Services' },
     { id: 'careers', label: 'Careers' },
     { id: 'contact', label: 'Contact Us' }
@@ -35,7 +46,7 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-4 bg-[#0a0b0e]/90 backdrop-blur-md border-b border-white/5 shadow-lg'
+          ? 'py-4 bg-[#0a0b0e]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
           : 'py-6 bg-transparent'
       }`}
       style={{
@@ -61,22 +72,57 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => handleNavClick(link.id)}
-              className={`relative text-sm font-semibold tracking-wide transition-all py-1 font-outfit ${
-                activePage === link.id
-                  ? 'text-white'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              {link.label}
-              {activePage === link.id && (
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full animate-fade-in" />
-              )}
-            </button>
-          ))}
+          {navLinks.map((link) => {
+            if (link.isDropdown) {
+              const isSubActive = link.subLinks.some(sub => activePage === sub.id);
+              return (
+                <div key={link.id} className="relative group py-2">
+                  <button
+                    type="button"
+                    className={`flex items-center gap-1 text-sm font-semibold tracking-wide py-1 font-outfit transition-all cursor-pointer ${
+                      isSubActive ? 'text-white' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    <ChevronDown size={14} className="opacity-70 group-hover:rotate-180 transition-transform duration-300" />
+                  </button>
+                  {/* Dropdown Menu */}
+                  <div className="absolute top-full left-0 mt-1 w-52 bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2 hidden group-hover:block animate-fade-in z-50">
+                    {link.subLinks.map((sub) => (
+                      <button
+                        key={sub.id}
+                        onClick={() => handleNavClick(sub.id)}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-bold font-outfit uppercase tracking-wider transition-colors block ${
+                          activePage === sub.id
+                            ? 'text-white bg-[#d32f2f]/10 border-l-2 border-[#d32f2f]'
+                            : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        {sub.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.id)}
+                className={`relative text-sm font-semibold tracking-wide transition-all py-1 font-outfit ${
+                  activePage === link.id
+                    ? 'text-white'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {link.label}
+                {activePage === link.id && (
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full animate-fade-in" />
+                )}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Action Button & Contact info */}
@@ -109,26 +155,60 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
       {/* Mobile Drawer Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 top-[60px] bg-[#0a0b0e] z-40 flex flex-col p-6 animate-fade-in md:hidden border-t border-white/5"
+          className="fixed inset-0 top-[60px] bg-[#0a0b0e] z-40 flex flex-col p-6 animate-fade-in md:hidden border-t border-white/5 overflow-y-auto"
           style={{ height: 'calc(100vh - 60px)' }}
         >
-          <div className="flex flex-col gap-6 mt-6">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`text-left text-xl font-bold font-outfit py-2 border-b border-white/5 transition-all ${
-                  activePage === link.id
-                    ? 'text-[#d32f2f] pl-2 border-l-2 border-l-[#d32f2f]'
-                    : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+          <div className="flex flex-col gap-5 mt-4">
+            {navLinks.map((link) => {
+              if (link.isDropdown) {
+                const isSubActive = link.subLinks.some(sub => activePage === sub.id);
+                return (
+                  <div key={link.id} className="flex flex-col gap-2">
+                    <button
+                      onClick={() => setIsMobileAboutOpen(!isMobileAboutOpen)}
+                      className={`flex items-center justify-between text-left text-xl font-bold font-outfit py-2 border-b border-white/5 w-full ${
+                        isSubActive ? 'text-[#d32f2f]' : 'text-slate-300'
+                      }`}
+                    >
+                      <span>{link.label}</span>
+                      <ChevronDown size={20} className={`transform transition-transform duration-300 ${isMobileAboutOpen ? 'rotate-180 text-[#d32f2f]' : 'text-slate-500'}`} />
+                    </button>
+                    {isMobileAboutOpen && (
+                      <div className="flex flex-col gap-3 pl-4 py-2.5 bg-white/5 rounded-md border border-white/5 animate-fade-in">
+                        {link.subLinks.map((sub) => (
+                          <button
+                            key={sub.id}
+                            onClick={() => handleNavClick(sub.id)}
+                            className={`text-left text-sm font-semibold font-outfit py-1 transition-colors block ${
+                              activePage === sub.id ? 'text-[#d32f2f]' : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {sub.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
+                  className={`text-left text-xl font-bold font-outfit py-2 border-b border-white/5 transition-all ${
+                    activePage === link.id
+                      ? 'text-[#d32f2f] pl-2 border-l-2 border-l-[#d32f2f]'
+                      : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
 
-          <div className="mt-auto flex flex-col gap-4 pb-12">
+          <div className="mt-8 flex flex-col gap-4 pb-12">
             <a
               href="tel:03302051221"
               className="flex items-center justify-center gap-2 p-3 bg-white/5 border border-white/10 rounded-sm text-sm font-semibold hover:bg-white/10 transition-colors"

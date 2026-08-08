@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, Award, MapPin, Phone } from 'lucide-react';
 import heroGuard from '../assets/hero_guard.jpg';
-import ceoAvatar from '../assets/ceo_avatar.jpg';
 
 const Home = ({ setActivePage }) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -94,56 +93,7 @@ const Home = ({ setActivePage }) => {
         </div>
       </section>
 
-      {/* CEO Message Section */}
-      <section className="bg-[#11131c] section-padding border-t border-b border-white/5">
-        <div className="container grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative group max-w-sm w-full">
-              {/* Decorative Red Frame Glow */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-[#d32f2f] to-[#b71c1c] rounded-xl blur-lg opacity-25 group-hover:opacity-40 transition duration-500" />
-              <div className="relative bg-[#0a0b0e] p-2.5 rounded-lg border border-white/10 overflow-hidden">
-                <img 
-                  src={ceoAvatar} 
-                  alt="CEO Al-Marsoos Security Services" 
-                  className="w-full h-auto object-cover rounded-md aspect-square filter grayscale hover:grayscale-0 transition-all duration-500"
-                />
-                <div className="mt-4 text-center">
-                  <h4 className="text-white font-bold text-lg font-outfit">Muhammad Malik</h4>
-                  <p className="text-[#d32f2f] text-xs font-semibold uppercase tracking-widest mt-1">CEO & Founder</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-7 flex flex-col gap-6 justify-center">
-            <span className="text-xs uppercase tracking-[0.2em] font-extrabold text-[#d32f2f] font-outfit flex items-center gap-2">
-              <span className="red-indicator" /> Leadership Message
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-outfit uppercase">
-              Founded on Military Discipline
-            </h2>
-            <div className="text-slate-300 font-sans flex flex-col gap-4">
-              <p className="font-semibold text-white text-base">
-                "Our CEO is a retired Pakistan Army officer who served the nation with honor for 25 years."
-              </p>
-              <p>
-                Having commanded troop tactical units and managed security systems under rigorous defense conditions, he brings the exact same precision, strategic vetting, and code of conduct to private security operations in Pakistan.
-              </p>
-              <p>
-                At AMS, we do not compromise on training, response readiness, or integrity. Every guard under our deployment is personally vetted, rigorously trained at our training modules, and kept alert through sudden random patrols.
-              </p>
-            </div>
-            <div className="flex items-center gap-4 mt-2">
-              <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center">
-                <Award className="text-[#d32f2f]" size={22} />
-              </div>
-              <div>
-                <h5 className="text-white font-bold text-sm font-outfit">25 Years Military Background</h5>
-                <p className="text-xs text-slate-400">Strict standard operational drills for ultimate vigilance.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Services Highlight Section */}
       <section className="bg-[#0a0b0e] section-padding">

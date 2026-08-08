@@ -1,6 +1,90 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown } from 'lucide-react';
 
+const branches = [
+  {
+    id: 'islamabad',
+    city: 'Islamabad (HQ)',
+    name: 'Islamabad Headquarters',
+    address: 'Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.',
+    phone: '0330 2051221 / 0302 5772842',
+    x: 315,
+    y: 120
+  },
+  {
+    id: 'rawalpindi',
+    city: 'Rawalpindi',
+    name: 'Rawalpindi Regional Office',
+    address: 'Office No. 19, Services Plaza, Mall Road, Saddar, Rawalpindi, Pakistan.',
+    phone: '0330 2051221',
+    x: 310,
+    y: 135
+  },
+  {
+    id: 'faisalabad',
+    city: 'Faisalabad',
+    name: 'Faisalabad Regional Office',
+    address: 'Office No. 5, First Floor, Madina Market, Sugar Morre, Sheikhupura Road, Faisalabad, Pakistan.',
+    phone: '0330 2051221',
+    x: 290,
+    y: 190
+  },
+  {
+    id: 'muzaffarabad',
+    city: 'Muzaffarabad',
+    name: 'Muzaffarabad Branch (AJK)',
+    address: 'Office No. 7, Near WAPDA Town, Dhana, Muzaffarabad, Azad Kashmir.',
+    phone: '0330 2051221',
+    x: 335,
+    y: 105
+  },
+  {
+    id: 'haripur',
+    city: 'Haripur',
+    name: 'Haripur Branch (KPK)',
+    address: 'Office No. 8, Second Floor, Doctor Plaza, Circular Road, Haripur, Khyber Pakhtunkhwa.',
+    phone: '0330 2051221',
+    x: 305,
+    y: 90
+  },
+  {
+    id: 'gujranwala',
+    city: 'Gujranwala',
+    name: 'Gujranwala Regional Office',
+    address: 'Office No. 397-A, Model Town, Gujranwala, Punjab, Pakistan.',
+    phone: '0330 2051221',
+    x: 330,
+    y: 160
+  },
+  {
+    id: 'quetta',
+    city: 'Quetta',
+    name: 'Quetta Branch (Balochistan)',
+    address: 'Chaman Plaza, Zarghun Road, Quetta, Balochistan, Pakistan.',
+    phone: '0330 2051221',
+    x: 180,
+    y: 250
+  },
+  {
+    id: 'gilgit',
+    city: 'Gilgit',
+    name: 'Gilgit Branch (Gilgit-Baltistan)',
+    address: 'NLI Plaza, Gilgit, Gilgit-Baltistan, Pakistan.',
+    phone: '0330 2051221',
+    x: 360,
+    y: 55
+  },
+  {
+    id: 'karachi',
+    city: 'Karachi',
+    name: 'Karachi Regional Office',
+    address: 'Flat AB-04, 2nd Floor, DHA Phase 2, Karachi, Sindh, Pakistan.',
+    phone: '0330 2051221',
+    x: 200,
+    y: 360
+  }
+];
+
 const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -16,8 +100,8 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
   });
   const [estimatedCost, setEstimatedCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedBranch, setSelectedBranch] = useState(branches[0]);
 
   // Auto-open form and scroll to it when triggered from "Get a Quote" button
   useEffect(() => {
@@ -400,7 +484,152 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      {/* Regional Network Section with Annotated Map */}
+      <section className="section-padding bg-[#11131c] border-t border-white/5">
+        <div className="container">
+          <div className="text-center max-w-xl mx-auto mb-12">
+            <MapPin className="text-[#d32f2f] mx-auto mb-3" size={32} />
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white uppercase font-outfit text-center">Our Regional Network</h2>
+            <p className="text-xs text-slate-400 font-sans mt-2 text-center">
+              With 9 tactical branches across Pakistan, Al-Marsoos Security provides seamless protective coverage nationwide.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Interactive Annotated Map Column (lg:col-span-7) */}
+            <div className="lg:col-span-7 flex justify-center w-full">
+              <div className="relative w-full max-w-[550px] aspect-[4/3] bg-[#07080a] border border-white/5 rounded-lg overflow-hidden p-4 flex items-center justify-center">
+                {/* SVG Map of Pakistan Outline (Styled and Annotated) */}
+                <svg viewBox="0 0 500 400" className="w-full h-full text-slate-700 select-none">
+                  {/* Decorative background grid lines */}
+                  <g stroke="#ffffff" strokeWidth="0.5" strokeOpacity="0.03" strokeDasharray="5 5">
+                    <line x1="50" y1="0" x2="50" y2="400" />
+                    <line x1="150" y1="0" x2="150" y2="400" />
+                    <line x1="250" y1="0" x2="250" y2="400" />
+                    <line x1="350" y1="0" x2="350" y2="400" />
+                    <line x1="450" y1="0" x2="450" y2="400" />
+                    <line x1="0" y1="80" x2="500" y2="80" />
+                    <line x1="0" y1="160" x2="500" y2="160" />
+                    <line x1="0" y1="240" x2="500" y2="240" />
+                    <line x1="0" y1="320" x2="500" y2="320" />
+                  </g>
+                  
+                  {/* Simplified schematic path outline of Pakistan provinces */}
+                  {/* Gilgit Baltistan */}
+                  <path d="M 320,30 L 380,40 L 400,90 L 370,120 L 320,110 L 300,70 Z" fill="#1b1c24" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                  {/* Azad Kashmir */}
+                  <path d="M 330,110 L 360,125 L 340,165 L 315,150 Z" fill="#2d1212" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                  {/* Khyber Pakhtunkhwa (KPK) */}
+                  <path d="M 270,70 L 310,75 L 315,140 L 290,170 L 270,140 L 250,110 Z" fill="#1b1c24" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                  {/* Punjab */}
+                  <path d="M 290,170 L 340,165 L 360,220 L 300,290 L 260,250 L 275,200 Z" fill="#151720" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                  {/* Balochistan */}
+                  <path d="M 120,200 L 250,210 L 270,260 L 210,330 L 140,320 Z" fill="#11131c" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                  {/* Sindh */}
+                  <path d="M 210,330 L 270,270 L 300,290 L 260,380 L 190,360 Z" fill="#1b1c24" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+
+                  {/* Province Labels */}
+                  <text x="345" y="70" fill="rgba(255,255,255,0.15)" fontSize="10" fontWeight="bold" fontFamily="sans-serif">GILGIT-BALTISTAN</text>
+                  <text x="250" y="90" fill="rgba(255,255,255,0.15)" fontSize="10" fontWeight="bold" fontFamily="sans-serif" transform="rotate(-30 250 90)">KPK</text>
+                  <text x="310" y="220" fill="rgba(255,255,255,0.15)" fontSize="10" fontWeight="bold" fontFamily="sans-serif">PUNJAB</text>
+                  <text x="160" y="260" fill="rgba(255,255,255,0.15)" fontSize="10" fontWeight="bold" fontFamily="sans-serif">BALOCHISTAN</text>
+                  <text x="220" y="325" fill="rgba(255,255,255,0.15)" fontSize="10" fontWeight="bold" fontFamily="sans-serif">SINDH</text>
+                  <text x="350" y="145" fill="rgba(255,255,255,0.15)" fontSize="8" fontWeight="bold" fontFamily="sans-serif">AJK</text>
+
+                  {/* Annotated Markers with Hover Highlights */}
+                  {branches.map((b) => (
+                    <g 
+                      key={b.id} 
+                      className="cursor-pointer group/pin"
+                      onClick={() => setSelectedBranch(b)}
+                    >
+                      {/* Outer pulse effect */}
+                      <circle 
+                        cx={b.x} 
+                        cy={b.y} 
+                        r="8" 
+                        fill={selectedBranch.id === b.id ? '#d32f2f' : '#ffffff'} 
+                        className={selectedBranch.id === b.id ? 'animate-pulse' : 'opacity-20 group-hover/pin:opacity-40'} 
+                        style={{ transformOrigin: `${b.x}px ${b.y}px` }}
+                      />
+                      {/* Inner solid circle */}
+                      <circle 
+                        cx={b.x} 
+                        cy={b.y} 
+                        r="4" 
+                        fill={selectedBranch.id === b.id ? '#d32f2f' : '#ffffff'} 
+                        stroke="#0a0b0e" 
+                        strokeWidth="1"
+                        className="group-hover/pin:fill-[#d32f2f] transition-colors"
+                      />
+                      {/* Name label tag */}
+                      <text 
+                        x={b.x + 8} 
+                        y={b.y + 3} 
+                        fill={selectedBranch.id === b.id ? '#d32f2f' : '#cbd5e1'} 
+                        fontSize="8" 
+                        fontWeight="bold" 
+                        fontFamily="sans-serif"
+                        className="group-hover/pin:fill-[#d32f2f] transition-colors"
+                      >
+                        {b.city}
+                      </text>
+                    </g>
+                  ))}
+                </svg>
+
+                <span className="absolute bottom-3 right-3 text-[9px] text-slate-500 font-sans">
+                  Click markers to view details
+                </span>
+              </div>
+            </div>
+
+            {/* Selected Branch Details Column (lg:col-span-5) */}
+            <div className="lg:col-span-5 w-full">
+              <div className="glass-card p-6 border border-white/10 flex flex-col gap-6 relative min-h-[300px] justify-between">
+                
+                <div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[#d32f2f]/10 border border-[#d32f2f]/30 flex items-center justify-center text-[#d32f2f]">
+                      <MapPin size={18} />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-[#d32f2f] uppercase font-bold tracking-widest block text-left">Active Station</span>
+                      <h4 className="text-xl font-extrabold text-white font-outfit uppercase tracking-wider text-left">{selectedBranch.name}</h4>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-4 mt-6 text-sm border-t border-white/5 pt-4">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-slate-500 text-[10px] uppercase font-sans text-left">Office Address</span>
+                      <p className="text-slate-300 text-xs font-sans leading-relaxed text-justify pr-2">
+                        {selectedBranch.address}
+                      </p>
+                    </div>
+
+                    {selectedBranch.phone && (
+                      <div className="flex flex-col gap-1">
+                        <span className="text-slate-500 text-[10px] uppercase font-sans text-left">Branch Contacts</span>
+                        <p className="text-slate-300 text-xs font-sans font-semibold text-left">
+                          {selectedBranch.phone}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="border-t border-white/5 pt-4 mt-4 flex items-center justify-between text-[10px] text-slate-500 font-sans w-full">
+                  <span>Operational Vetting Status: Vetted</span>
+                  <span className="text-[#d32f2f] font-bold uppercase tracking-wider">Active</span>
+                </div>
+
+              </div>
             </div>
 
           </div>
