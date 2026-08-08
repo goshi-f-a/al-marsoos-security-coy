@@ -1,6 +1,9 @@
 import React from 'react';
 import { User, Shield, Award, Briefcase, Star } from 'lucide-react';
 import ceoAvatar from '../assets/ceo_avatar.jpg';
+import shoukatAvatar from '../assets/leader_shoukat.jpg';
+import yasinAvatar from '../assets/leader_yasin.jpg';
+import azamAvatar from '../assets/leader_azam.jpg';
 
 const Leadership = () => {
   const leaders = [
@@ -11,7 +14,7 @@ const Leadership = () => {
       bio: 'Broad experience of working in security agencies inland and abroad. Oversees client acquisitions, business development, and strategic partnerships globally.',
       image: null, // Placeholder silhouette
       tag: 'Executive Board',
-      isTop: true
+      isTop: false
     },
     {
       id: 'saleem',
@@ -20,14 +23,14 @@ const Leadership = () => {
       bio: 'Retired Army Officer with 25 years of dedicated service in the Pakistan Army. Extensive experience in military intelligence, security management, and private security enterprise operations.',
       image: ceoAvatar,
       tag: 'Command & Founder',
-      isTop: false
+      isTop: true
     },
     {
       id: 'shoukat',
       name: 'Raja Muhammad Shoukat',
       role: 'Managing Director (MD)',
       bio: '13 years of extensive security management experience. Specializes in managing government cooperative societies, VIP protection details, bank security, and large-scale industrial security setups.',
-      image: null,
+      image: shoukatAvatar,
       tag: 'Operations Director',
       isTop: false
     },
@@ -36,7 +39,7 @@ const Leadership = () => {
       name: 'Muhammad Yasin',
       role: 'Executive Director (ED)',
       bio: 'Leads the Human Resources, Finance, and Marketing divisions at Al-Marsoos. Focuses on corporate restructuring, financial compliance, and HR audit systems.',
-      image: null,
+      image: yasinAvatar,
       tag: 'Corporate Director',
       isTop: false
     },
@@ -45,7 +48,7 @@ const Leadership = () => {
       name: 'Rana Azam Hussain',
       role: 'General Manager (Operations & Training)',
       bio: '10 years of security management experience. Oversees the training school curriculum, physical drills, weapon safety, and active security deployments across all provinces.',
-      image: null,
+      image: azamAvatar,
       tag: 'Tactical Command',
       isTop: false
     }
@@ -118,7 +121,13 @@ const Leadership = () => {
                       {topLeader.bio}
                     </p>
                     
-                    <div className="flex gap-4 border-t border-white/5 pt-4 mt-2">
+                    <div className="flex gap-4 border-t border-white/5 pt-4 mt-2 flex-wrap">
+                      {topLeader.id === 'saleem' && (
+                        <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-sans">
+                          <Award size={12} className="text-[#d32f2f]" />
+                          <span>Ex-Military Command</span>
+                        </div>
+                      )}
                       <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-sans">
                         <Briefcase size={12} className="text-[#d32f2f]" />
                         <span>Corporate Relations</span>
@@ -167,10 +176,10 @@ const Leadership = () => {
                     <Shield size={12} className="text-[#d32f2f]" />
                     <span>Verified Credentials</span>
                   </div>
-                  {leader.id === 'saleem' && (
+                  {leader.id === 'safdar' && (
                     <div className="flex items-center gap-1">
-                      <Award size={12} className="text-[#d32f2f]" />
-                      <span>Ex-Military</span>
+                      <Star size={12} className="text-[#d32f2f]" />
+                      <span>Exec Board</span>
                     </div>
                   )}
                 </div>

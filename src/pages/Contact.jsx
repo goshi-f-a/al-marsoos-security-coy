@@ -8,6 +8,7 @@ const branches = [
     name: 'Islamabad Headquarters',
     address: 'Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.',
     phone: '0330 2051221 / 0302 5772842',
+    mapUrl: 'https://maps.google.com/?q=33.633407629053465,72.93729544717415',
     x: 315,
     y: 120
   },
@@ -17,6 +18,7 @@ const branches = [
     name: 'Rawalpindi Regional Office',
     address: 'Office No. 19, Services Plaza, Mall Road, Saddar, Rawalpindi, Pakistan.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=Services+Plaza+Mall+Road+Saddar+Rawalpindi',
     x: 310,
     y: 135
   },
@@ -26,6 +28,7 @@ const branches = [
     name: 'Faisalabad Regional Office',
     address: 'Office No. 5, First Floor, Madina Market, Sugar Morre, Sheikhupura Road, Faisalabad, Pakistan.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=Madina+Market+Sugar+Morre+Sheikhupura+Road+Faisalabad',
     x: 290,
     y: 190
   },
@@ -35,6 +38,7 @@ const branches = [
     name: 'Muzaffarabad Branch (AJK)',
     address: 'Office No. 7, Near WAPDA Town, Dhana, Muzaffarabad, Azad Kashmir.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=WAPDA+Town+Dhana+Muzaffarabad',
     x: 335,
     y: 105
   },
@@ -44,6 +48,7 @@ const branches = [
     name: 'Haripur Branch (KPK)',
     address: 'Office No. 8, Second Floor, Doctor Plaza, Circular Road, Haripur, Khyber Pakhtunkhwa.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=Doctor+Plaza+Circular+Road+Haripur',
     x: 305,
     y: 90
   },
@@ -53,6 +58,7 @@ const branches = [
     name: 'Gujranwala Regional Office',
     address: 'Office No. 397-A, Model Town, Gujranwala, Punjab, Pakistan.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=Model+Town+Gujranwala+Punjab',
     x: 330,
     y: 160
   },
@@ -62,6 +68,7 @@ const branches = [
     name: 'Quetta Branch (Balochistan)',
     address: 'Chaman Plaza, Zarghun Road, Quetta, Balochistan, Pakistan.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=Chaman+Plaza+Zarghun+Road+Quetta',
     x: 180,
     y: 250
   },
@@ -71,6 +78,7 @@ const branches = [
     name: 'Gilgit Branch (Gilgit-Baltistan)',
     address: 'NLI Plaza, Gilgit, Gilgit-Baltistan, Pakistan.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=NLI+Plaza+Gilgit+Pakistan',
     x: 360,
     y: 55
   },
@@ -80,6 +88,7 @@ const branches = [
     name: 'Karachi Regional Office',
     address: 'Flat AB-04, 2nd Floor, DHA Phase 2, Karachi, Sindh, Pakistan.',
     phone: '0330 2051221',
+    mapUrl: 'https://maps.google.com/?q=DHA+Phase+2+Karachi+Sindh',
     x: 200,
     y: 360
   }
