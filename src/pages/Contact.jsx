@@ -247,7 +247,13 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                 <h4 className="text-white font-bold text-sm uppercase tracking-widest text-[#d32f2f]">
                   AMS Location Representation
                 </h4>
-                <div className="bg-[#07080a] border border-white/5 rounded-md h-[220px] relative overflow-hidden flex items-center justify-center">
+                <a
+                  href="https://maps.google.com/?q=33.633407629053465,72.93729544717415"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#07080a] border border-white/5 rounded-md h-[220px] relative overflow-hidden flex items-center justify-center group hover:border-[#d32f2f]/30 transition-colors w-full cursor-pointer"
+                  title="Click to View on Google Maps"
+                >
                   
                   {/* Decorative High-End Map Lines SVG */}
                   <svg width="100%" height="100%" viewBox="0 0 400 220" className="absolute inset-0 opacity-40">
@@ -274,7 +280,7 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                   </svg>
 
                   {/* Location Pin overlay */}
-                  <div className="absolute top-[92px] left-[202px] flex flex-col items-center">
+                  <div className="absolute top-[92px] left-[202px] flex flex-col items-center group-hover:scale-105 transition-transform duration-200">
                     <span className="w-5 h-5 bg-[#d32f2f] rounded-full border-2 border-white flex items-center justify-center shadow-[0_0_15px_#d32f2f] animate-pulse">
                       <ShieldCheck size={10} className="text-white" />
                     </span>
@@ -283,10 +289,10 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                     </span>
                   </div>
 
-                  <span className="absolute bottom-3 left-3 text-[10px] text-slate-500 font-sans">
-                    Motorway Chowk Cross, Islamabad
+                  <span className="absolute bottom-3 left-3 text-[10px] text-slate-500 font-sans group-hover:text-slate-300 transition-colors">
+                    Motorway Chowk Cross, Islamabad (Click to View on Google Maps)
                   </span>
-                </div>
+                </a>
               </div>
             </div>
 
@@ -633,9 +639,22 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                   </div>
                 </div>
 
-                <div className="border-t border-white/5 pt-4 mt-4 flex items-center justify-between text-[10px] text-slate-500 font-sans w-full">
-                  <span>Operational Vetting Status: Vetted</span>
-                  <span className="text-[#d32f2f] font-bold uppercase tracking-wider">Active</span>
+                <div className="border-t border-white/5 pt-4 mt-4 flex flex-col gap-4 w-full">
+                  {selectedBranch.mapUrl && (
+                    <a
+                      href={selectedBranch.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary py-2 text-[10px] uppercase tracking-wider text-center w-full flex items-center justify-center gap-1.5 border border-white/10 hover:border-[#d32f2f]/30 hover:text-[#d32f2f] transition-all"
+                    >
+                      <MapPin size={12} />
+                      <span>View on Google Maps</span>
+                    </a>
+                  )}
+                  <div className="flex items-center justify-between text-[10px] text-slate-500 font-sans w-full">
+                    <span>Operational Vetting Status: Vetted</span>
+                    <span className="text-[#d32f2f] font-bold uppercase tracking-wider">Active</span>
+                  </div>
                 </div>
 
               </div>

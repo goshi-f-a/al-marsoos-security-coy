@@ -121,7 +121,7 @@ const Credentials = () => {
       <section className="section-padding bg-[#0a0b0e]">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            
+
             {/* Sidebar Sub-Menu Tabs (lg:col-span-4) */}
             <div className="lg:col-span-4 flex flex-col gap-2 w-full">
               <span className="text-slate-500 text-[10px] uppercase font-bold tracking-widest pl-3 mb-2">Available Credentials</span>
@@ -133,11 +133,10 @@ const Credentials = () => {
                     <button
                       key={tab.id}
                       onClick={() => { setActiveTab(tab.id); setIsZoomed(false); }}
-                      className={`flex items-center gap-3 px-4 py-3.5 rounded-md text-left text-xs font-bold font-outfit tracking-wide uppercase transition-all duration-300 border whitespace-nowrap lg:whitespace-normal shrink-0 ${
-                        isActive
+                      className={`flex items-center gap-3 px-4 py-3.5 rounded-md text-left text-xs font-bold font-outfit tracking-wide uppercase transition-all duration-300 border whitespace-nowrap lg:whitespace-normal shrink-0 ${isActive
                           ? 'bg-[#d32f2f]/10 border-[#d32f2f] text-white'
                           : 'bg-[#11131c]/50 border-white/5 text-slate-400 hover:text-white hover:bg-white/5'
-                      }`}
+                        }`}
                     >
                       <Icon size={16} className={isActive ? 'text-[#d32f2f]' : 'text-slate-500'} />
                       <span>{tab.label}</span>
@@ -150,7 +149,7 @@ const Credentials = () => {
             {/* Document Details & Image Viewer Container (lg:col-span-8) */}
             <div className="lg:col-span-8 flex flex-col gap-6 w-full">
               <div className="glass-card p-6 sm:p-8 border border-white/5 flex flex-col gap-6">
-                
+
                 {/* Certificate Title Header */}
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-white/5 pb-5">
                   <div>
@@ -164,7 +163,7 @@ const Credentials = () => {
 
                 {/* Main content split */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                  
+
                   {/* Left Column: Data Grid (md:col-span-7 or 12 depending on image availability) */}
                   <div className={current.image ? 'md:col-span-6 flex flex-col gap-4' : 'md:col-span-12 flex flex-col gap-4'}>
                     <p className="text-slate-300 text-xs font-sans leading-relaxed text-justify mb-2">
@@ -186,9 +185,9 @@ const Credentials = () => {
                   {current.image && (
                     <div className="md:col-span-6 flex flex-col gap-3">
                       <div className="relative group rounded-md overflow-hidden bg-slate-900 border border-white/10 aspect-[3/4] flex items-center justify-center shadow-lg">
-                        <img 
-                          src={current.image} 
-                          alt={current.title} 
+                        <img
+                          src={current.image}
+                          alt={current.title}
                           className="w-full h-full object-cover"
                         />
                         {/* Hover Overlay controls */}
@@ -257,9 +256,9 @@ const Credentials = () => {
           </div>
           {/* Large Image Frame */}
           <div className="w-full max-w-3xl aspect-[3/4] bg-slate-950 rounded-lg overflow-hidden border border-white/10 relative max-h-[85vh] flex justify-center items-center">
-            <img 
-              src={current.image} 
-              alt={current.title} 
+            <img
+              src={current.image}
+              alt={current.title}
               className="max-w-full max-h-full object-contain"
             />
           </div>

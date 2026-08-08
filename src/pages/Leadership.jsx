@@ -4,6 +4,7 @@ import ceoAvatar from '../assets/ceo_avatar.jpg';
 import shoukatAvatar from '../assets/leader_shoukat.jpg';
 import yasinAvatar from '../assets/leader_yasin.jpg';
 import azamAvatar from '../assets/leader_azam.jpg';
+import safdarAvatar from '../assets/safdar.jpeg';
 
 const Leadership = () => {
   const leaders = [
@@ -12,7 +13,7 @@ const Leadership = () => {
       name: 'Safdar Malik',
       role: 'General Manager Marketing & Sales',
       bio: 'Broad experience of working in security agencies inland and abroad. Oversees client acquisitions, business development, and strategic partnerships globally.',
-      image: null, // Placeholder silhouette
+      image: safdarAvatar,
       tag: 'Executive Board',
       isTop: false
     },

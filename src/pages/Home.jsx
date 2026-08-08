@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, Award, MapPin, Phone } from 'lucide-react';
 import heroGuard from '../assets/hero_guard.jpg';
+import heroGuardSolo from '../assets/hero_guard_solo.png';
 
 const Home = ({ setActivePage }) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -35,16 +36,33 @@ const Home = ({ setActivePage }) => {
     <div className="flex flex-col w-full font-outfit">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#07080a] pt-24 overflow-hidden">
-        {/* Background Image with Dark Overlays */}
+        {/* ── BACKGROUND: new guard image darkened — building shows as moody backdrop ── */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={heroGuard} 
-            alt="AMS Security Officer" 
-            className="w-full h-full object-cover object-center opacity-40 scale-105 animate-fade-in"
+          <img
+            src={heroGuardSolo}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover animate-fade-in"
+            style={{ objectPosition: 'center 20%', opacity: 0.18, filter: 'blur(2px) brightness(0.6)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0b0e] via-[#0a0b0e]/90 to-transparent" />
+          {/* Full dark overlay so text area is always readable */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0b0e] via-[#0a0b0e]/95 to-[#0a0b0e]/70" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0e] via-transparent to-transparent" />
         </div>
+
+        {/* ── FOREGROUND GUARD: tall positioned image on right, fused with gradient mask ── */}
+        <img
+          src={heroGuardSolo}
+          alt="AMS Security Officer"
+          className="absolute bottom-0 right-[5%] h-[92%] w-auto object-contain z-10 animate-fade-in select-none pointer-events-none"
+          style={{
+            maskImage: 'linear-gradient(to right, transparent 0%, black 18%), linear-gradient(to top, transparent 0%, black 12%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 18%), linear-gradient(to top, transparent 0%, black 12%)',
+            maskComposite: 'intersect',
+            WebkitMaskComposite: 'source-in',
+            filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.9))'
+          }}
+        />
 
         <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-16">
           <div className="lg:col-span-8 flex flex-col items-start gap-6 animate-fade-in">

@@ -79,23 +79,29 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
                 <div key={link.id} className="relative group py-2">
                   <button
                     type="button"
-                    className={`flex items-center gap-1 text-sm font-semibold tracking-wide py-1 font-outfit transition-all cursor-pointer ${
+                    className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide py-1 font-outfit transition-all duration-200 cursor-pointer group/dropdown ${
                       isSubActive ? 'text-white' : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     <span>{link.label}</span>
                     <ChevronDown size={14} className="opacity-70 group-hover:rotate-180 transition-transform duration-300" />
+                    {/* Hover underline — only when no sub-page active */}
+                    {!isSubActive && (
+                      <span className="absolute bottom-0 left-0 h-[2px] bg-[#d32f2f]/60 rounded-full w-0 group-hover/dropdown:w-full transition-all duration-300" />
+                    )}
+                    {/* Active underline when a sub-page is active */}
+                    {isSubActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full" />
+                    )}
                   </button>
                   {/* Dropdown Menu */}
-                  <div className="absolute top-full left-0 mt-1 w-52 bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2 hidden group-hover:block animate-fade-in z-50">
+                  <div className="absolute top-full left-0 mt-1 w-64 bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2 hidden group-hover:block animate-fade-in z-50">
                     {link.subLinks.map((sub) => (
                       <button
                         key={sub.id}
                         onClick={() => handleNavClick(sub.id)}
-                        className={`w-full text-left px-4 py-2.5 text-xs font-bold font-outfit uppercase tracking-wider transition-colors block ${
-                          activePage === sub.id
-                            ? 'text-white bg-[#d32f2f]/10 border-l-2 border-[#d32f2f]'
-                            : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        className={`dropdown-item w-full text-left px-4 py-3 text-xs font-medium font-outfit transition-all duration-200 block ${
+                          activePage === sub.id ? 'active text-white' : 'text-slate-400'
                         }`}
                       >
                         {sub.label}
@@ -107,18 +113,23 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
             }
 
             return (
-              <button
+                <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`relative text-sm font-semibold tracking-wide transition-all py-1 font-outfit ${
+                className={`relative text-sm font-semibold tracking-wide transition-all duration-200 py-1 font-outfit group/nav ${
                   activePage === link.id
                     ? 'text-white'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {link.label}
+                {/* Active underline */}
                 {activePage === link.id && (
                   <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full animate-fade-in" />
+                )}
+                {/* Hover underline — only when not active */}
+                {activePage !== link.id && (
+                  <span className="absolute bottom-0 left-0 h-[2px] bg-[#d32f2f]/60 rounded-full w-0 group-hover/nav:w-full transition-all duration-300" />
                 )}
               </button>
             );
