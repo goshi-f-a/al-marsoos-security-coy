@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, Award, MapPin } from 'lucide-react';
+import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, Award, MapPin, Phone } from 'lucide-react';
 import heroGuard from '../assets/hero_guard.jpg';
 import ceoAvatar from '../assets/ceo_avatar.jpg';
 
