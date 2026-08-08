@@ -109,6 +109,7 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
   });
   const [estimatedCost, setEstimatedCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(branches[0]);
 
