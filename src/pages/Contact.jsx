@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check } from 'lucide-react';
+import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown } from 'lucide-react';
 
-const Contact = () => {
+const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,6 +17,19 @@ const Contact = () => {
   const [estimatedCost, setEstimatedCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  // Auto-open form and scroll to it when triggered from "Get a Quote" button
+  useEffect(() => {
+    if (openQuoteForm) {
+      setIsFormOpen(true);
+      setOpenQuoteForm(false);
+      setTimeout(() => {
+        const el = document.getElementById('quote-form-panel');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }, [openQuoteForm]);
 
   // Rate Constants (in PKR per Guard per month/event)
   const RATES = {
@@ -73,15 +86,14 @@ const Contact = () => {
   };
 
   return (
-    <div className="flex flex-col w-full font-outfit bg-[#0a0b0e] pt-24 min-h-screen">
+    <div className="flex flex-col w-full font-outfit bg-[#0a0b0e] page-wrapper-spacing min-h-screen">
       {/* Header */}
       <section className="py-12 border-b border-white/5 bg-[#11131c]">
-        <div className="container text-center">
-          <span className="badge mb-3">Get in Touch</span>
+        <div className="container flex flex-col items-center text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gradient-red uppercase font-outfit">
-            Contact & Quote Calculator
+            Contact &amp; Quote Calculator
           </h1>
-          <p className="text-slate-400 text-sm max-w-xl mx-auto mt-2 font-sans">
+          <p className="text-slate-400 text-sm max-w-xl mt-2 font-sans text-center">
             Calculate estimated security costs instantly and submit quote requests directly to our marketing team.
           </p>
         </div>
@@ -90,7 +102,7 @@ const Contact = () => {
       {/* Calculator & Contact Details Info */}
       <section className="py-16">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
             
             {/* Left Side: Contact details and office location map */}
             <div className="lg:col-span-5 flex flex-col gap-8">
@@ -277,95 +289,115 @@ const Contact = () => {
               </div>
 
               {/* Consultation request form */}
-              <div className="glass-card p-8 border border-white/5">
-                <h3 className="text-xl font-bold text-white font-outfit uppercase tracking-wider mb-6">
-                  Submit Quote Inquiry
-                </h3>
-
-                {isSuccess ? (
-                  <div className="flex flex-col items-center text-center py-8 gap-4 animate-fade-in">
-                    <div className="w-14 h-14 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center text-green-500">
-                      <Check size={28} />
-                    </div>
-                    <h4 className="text-white font-bold text-lg font-outfit uppercase">Inquiry Received!</h4>
-                    <p className="text-slate-300 text-xs font-sans max-w-sm">
-                      We have received your estimate query. Mr. Safdar Malik (General Manager Marketing) will reach out to you within 2 hours to confirm deployment terms and finalize plans.
-                    </p>
-                    <button
-                      onClick={() => setIsSuccess(false)}
-                      className="btn btn-secondary text-xs uppercase tracking-wider mt-2"
-                    >
-                      Submit Another Query
-                    </button>
+              <div id="quote-form-panel" className="glass-card border border-white/5 overflow-hidden">
+                {/* Clickable Toggle Header */}
+                <button
+                  type="button"
+                  onClick={() => setIsFormOpen((prev) => !prev)}
+                  className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-white/5 transition-colors duration-200"
+                >
+                  <div className="flex items-center gap-3">
+                    <Send size={18} className="text-[#d32f2f]" />
+                    <h3 className="text-2xl font-bold text-white font-outfit uppercase tracking-wider">
+                      Submit Quote Inquiry
+                    </h3>
                   </div>
-                ) : (
-                  <form onSubmit={handleFormSubmit} className="flex flex-col">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="form-group">
-                        <label className="form-label">Your Name *</label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          placeholder="e.g. Tariq Mehmood"
-                          className="form-input"
-                          required
-                        />
+                  <ChevronDown
+                    size={20}
+                    className="text-slate-400 transition-transform duration-300"
+                    style={{ transform: isFormOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  />
+                </button>
+
+                {/* Collapsible Form Body */}
+                {isFormOpen && (
+                  <div className="px-6 pb-8 animate-fade-in">
+                    {isSuccess ? (
+                      <div className="flex flex-col items-center text-center py-8 gap-4 animate-fade-in">
+                        <div className="w-14 h-14 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center text-green-500">
+                          <Check size={28} />
+                        </div>
+                        <h4 className="text-white font-bold text-lg font-outfit uppercase">Inquiry Received!</h4>
+                        <p className="text-slate-300 text-xs font-sans max-w-sm">
+                          We have received your estimate query. Mr. Safdar Malik (General Manager Marketing) will reach out to you within 2 hours to confirm deployment terms and finalize plans.
+                        </p>
+                        <button
+                          onClick={() => setIsSuccess(false)}
+                          className="btn btn-secondary text-xs uppercase tracking-wider mt-2"
+                        >
+                          Submit Another Query
+                        </button>
                       </div>
-                      <div className="form-group">
-                        <label className="form-label">Phone Number *</label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="e.g. 03301234567"
-                          className="form-input"
-                          required
-                        />
-                      </div>
-                    </div>
+                    ) : (
+                      <form onSubmit={handleFormSubmit} className="flex flex-col">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="form-group">
+                            <label className="form-label">Your Name *</label>
+                            <input
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleInputChange}
+                              placeholder="e.g. Tariq Mehmood"
+                              className="form-input"
+                              required
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label className="form-label">Phone Number *</label>
+                            <input
+                              type="tel"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleInputChange}
+                              placeholder="e.g. 03301234567"
+                              className="form-input"
+                              required
+                            />
+                          </div>
+                        </div>
 
-                    <div className="form-group">
-                      <label className="form-label">Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="e.g. client@domain.com"
-                        className="form-input"
-                        required
-                      />
-                    </div>
+                        <div className="form-group">
+                          <label className="form-label">Email Address *</label>
+                          <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="e.g. client@domain.com"
+                            className="form-input"
+                            required
+                          />
+                        </div>
 
-                    <div className="form-group">
-                      <label className="form-label">Deployment Specifics & Special Requests</label>
-                      <textarea
-                        name="notes"
-                        value={formData.notes}
-                        onChange={handleInputChange}
-                        placeholder="e.g. Gated society security at Green Valley, need 4 static guards for 12h shifts and 1 mobile supervisor..."
-                        className="form-textarea"
-                      />
-                    </div>
+                        <div className="form-group">
+                          <label className="form-label">Deployment Specifics &amp; Special Requests</label>
+                          <textarea
+                            name="notes"
+                            value={formData.notes}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Gated society security at Green Valley, need 4 static guards for 12h shifts and 1 mobile supervisor..."
+                            className="form-textarea"
+                          />
+                        </div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn btn-primary w-full uppercase tracking-wider text-xs rounded-sm flex items-center justify-center gap-2 mt-2"
-                    >
-                      {isSubmitting ? (
-                        <span>Sending Quote Request...</span>
-                      ) : (
-                        <>
-                          <Send size={14} />
-                          <span>Request Contract Draft</span>
-                        </>
-                      )}
-                    </button>
-                  </form>
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="btn btn-primary w-full uppercase tracking-wider text-xs rounded-sm flex items-center justify-center gap-2 mt-2"
+                        >
+                          {isSubmitting ? (
+                            <span>Sending Quote Request...</span>
+                          ) : (
+                            <>
+                              <Send size={14} />
+                              <span>Request Contract Draft</span>
+                            </>
+                          )}
+                        </button>
+                      </form>
+                    )}
+                  </div>
                 )}
               </div>
 

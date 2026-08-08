@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { UserCheck, BookOpen, Scale, Award, Send, Check } from 'lucide-react';
+import { UserCheck, BookOpen, Scale, Award, Send, Check, Shield } from 'lucide-react';
 
 const Careers = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -69,28 +70,29 @@ const Careers = () => {
   };
 
   return (
-    <div className="flex flex-col w-full font-outfit bg-[#0a0b0e] pt-24 min-h-screen">
+    <div className="flex flex-col w-full font-outfit bg-[#0a0b0e] page-wrapper-spacing min-h-screen">
       {/* Header */}
       <section className="py-12 border-b border-white/5 bg-[#11131c]">
-        <div className="container text-center">
-          <span className="badge mb-3">Join Our Elite Team</span>
+        <div className="container flex flex-col items-center text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gradient-red uppercase font-outfit">
             Careers at Al-Marsoos
           </h1>
-          <p className="text-slate-400 text-sm max-w-xl mx-auto mt-2 font-sans">
+          <p className="text-slate-400 text-sm max-w-xl mt-2 font-sans text-center">
             Build a career in security operations driven by military standards, rigorous training, and professional code.
           </p>
         </div>
       </section>
 
       {/* Recruitment Standards Grid */}
-      <section className="py-16 bg-[#0a0b0e]">
+      <section className="section-spacing bg-[#0a0b0e]">
         <div className="container">
-          <div className="text-center max-w-xl mx-auto mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white uppercase">Our Recruitment Standards</h2>
-            <p className="text-xs text-slate-400 font-sans mt-2">
-              At Al-Marsoos Security, we enforce tough checks and standards. We protect elite clients and demand total professional integrity.
-            </p>
+          <div className="w-full flex justify-center mb-12">
+            <div className="flex flex-col items-center text-center max-w-xl">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white uppercase">Our Recruitment Standards</h2>
+              <p className="text-xs text-slate-400 font-sans mt-2 text-center">
+                At Al-Marsoos Security, we enforce tough checks and standards. We protect elite clients and demand total professional integrity.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -128,9 +130,9 @@ const Careers = () => {
       </section>
 
       {/* Interactive Form & Job Listings */}
-      <section className="py-16 bg-[#11131c] border-t border-b border-white/5">
+      <section className="section-spacing bg-[#11131c] border-t border-b border-white/5">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             
             {/* Job Openings Panel */}
             <div className="lg:col-span-6 flex flex-col gap-6">
@@ -150,21 +152,45 @@ const Careers = () => {
                         {job.type}
                       </span>
                     </div>
-                    <div className="text-xs text-slate-400 flex flex-col gap-1.5 font-sans">
+                    <div className="text-xs text-slate-400 flex flex-col gap-1.5 font-sans mb-1">
                       <p><strong>Location:</strong> {job.location}</p>
                       <p><strong>Requirements:</strong> {job.requirements}</p>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData((prev) => ({ ...prev, position: job.id }));
+                        setIsFormOpen(true);
+                        setTimeout(() => {
+                          const formElement = document.getElementById('recruitment-form-container');
+                          if (formElement) {
+                            formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          }
+                        }, 100);
+                      }}
+                      className="btn btn-secondary text-[10px] py-1.5 px-4 w-fit tracking-wider uppercase rounded-sm border border-[#d32f2f]/30 text-[#d32f2f] hover:bg-[#d32f2f] hover:text-white transition-all duration-300"
+                    >
+                      Apply Now
+                    </button>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Application Submission Form */}
-            <div className="lg:col-span-6">
-              <div className="glass-card p-8 sm:p-10 border border-white/5">
-                <h3 className="text-2xl font-extrabold text-white font-outfit uppercase tracking-wider mb-6">
-                  Online Recruitment Form
-                </h3>
+            <div className="lg:col-span-6" id="recruitment-form-container">
+              {isFormOpen ? (
+                <div className="glass-card p-8 sm:p-10 border border-white/5 relative animate-fade-in">
+                  <button
+                    type="button"
+                    onClick={() => setIsFormOpen(false)}
+                    className="absolute top-4 right-4 text-[10px] font-bold text-slate-500 hover:text-white uppercase tracking-wider transition-colors"
+                  >
+                    [ Close Form ]
+                  </button>
+                  <h3 className="text-2xl font-extrabold text-white font-outfit uppercase tracking-wider mb-6">
+                    Online Recruitment Form
+                  </h3>
 
                 {isSuccess ? (
                   <div className="flex flex-col items-center text-center py-12 gap-4 animate-fade-in">
@@ -306,7 +332,23 @@ const Careers = () => {
                 )}
 
               </div>
-            </div>
+            ) : (
+              <div className="glass-card p-8 sm:p-10 border border-white/5 flex flex-col items-center justify-center text-center min-h-[350px] bg-[#1a1c24]/30 w-full">
+                <Shield className="text-[#d32f2f] mb-4 animate-pulse" size={40} />
+                <h4 className="text-white font-bold text-lg uppercase tracking-wider font-outfit">Ready to Join Us?</h4>
+                <p className="text-xs text-slate-400 font-sans max-w-xs mt-2 mb-6 leading-relaxed">
+                  Click "Apply Now" on any job opportunity or click the button below to open the secure recruitment and background vetting form.
+                </p>
+                <button
+                  type="button" 
+                  onClick={() => setIsFormOpen(true)}
+                  className="btn btn-primary text-xs uppercase tracking-wider rounded-sm px-6"
+                >
+                  Open Application Form
+                </button>
+              </div>
+            )}
+          </div>
 
           </div>
         </div>

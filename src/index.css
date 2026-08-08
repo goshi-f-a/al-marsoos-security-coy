@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* AMS Global Design System & Variables */
 :root {
   /* Color Palette - Premium Dark & Tactical Theme */
@@ -314,3 +316,27 @@ button, input, textarea, select {
     font-size: 2rem;
   }
 }
+
+/* Responsive section spacing used on inner page sections */
+.section-spacing {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+@media (max-width: 768px) {
+  .section-spacing {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
+
+/* Page Wrapper Spacing for Fixed Header Offset */
+.page-wrapper-spacing {
+  padding-top: 110px;
+}
+@media (max-width: 768px) {
+  .page-wrapper-spacing {
+    padding-top: 80px;
+  }
+}
+
+

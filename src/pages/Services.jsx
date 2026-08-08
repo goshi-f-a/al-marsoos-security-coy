@@ -106,11 +106,10 @@ const Services = ({ setActivePage }) => {
   const currentData = categories.find((cat) => cat.id === activeTab);
 
   return (
-    <div className="flex flex-col w-full font-outfit bg-[#0a0b0e] pt-24 min-h-screen">
+    <div className="flex flex-col w-full font-outfit bg-[#0a0b0e] page-wrapper-spacing min-h-screen">
       {/* Page Header */}
       <section className="py-12 border-b border-white/5 bg-[#11131c]">
         <div className="container text-center">
-          <span className="badge mb-3">AMS Security Portfolio</span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gradient-red uppercase font-outfit">
             Professional Security Solutions
           </h1>
@@ -127,9 +126,10 @@ const Services = ({ setActivePage }) => {
             
             {/* Sidebar Tabs Selector */}
             <div className="lg:col-span-4 flex flex-col gap-3">
-              <h4 className="text-white font-bold text-base mb-4 uppercase tracking-widest text-slate-500 text-xs">
+              <h4 className="text-slate-500 font-bold mb-2 uppercase tracking-widest text-xs">
                 Service Sectors
               </h4>
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
@@ -147,6 +147,7 @@ const Services = ({ setActivePage }) => {
                   <span>&rarr;</span>
                 </button>
               ))}
+              </div>
 
               {/* Sidebar Quick Call Info */}
               <div className="glass-card p-6 mt-8 border border-white/5 flex flex-col gap-4">
@@ -171,7 +172,7 @@ const Services = ({ setActivePage }) => {
                   <img
                     src={currentData.image}
                     alt={currentData.title}
-                    className="w-full h-full object-cover object-center filter grayscale hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#11131c] to-transparent" />
                   <span className="absolute bottom-6 left-6 badge bg-[#d32f2f] border-transparent text-white uppercase tracking-wider font-bold">

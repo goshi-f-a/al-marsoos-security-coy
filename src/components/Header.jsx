@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Logo from './Logo';
 import { Menu, X, Shield, Phone } from 'lucide-react';
 
-const Header = ({ activePage, setActivePage }) => {
+const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -35,8 +35,8 @@ const Header = ({ activePage, setActivePage }) => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-3 bg-[#0a0b0e]/90 backdrop-blur-md border-b border-white/5 shadow-lg'
-          : 'py-5 bg-transparent'
+          ? 'py-4 bg-[#0a0b0e]/90 backdrop-blur-md border-b border-white/5 shadow-lg'
+          : 'py-6 bg-transparent'
       }`}
       style={{
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -89,7 +89,7 @@ const Header = ({ activePage, setActivePage }) => {
             <span>0330 2051221</span>
           </a>
           <button
-            onClick={() => handleNavClick('contact')}
+            onClick={() => { setOpenQuoteForm(true); handleNavClick('contact'); }}
             className="btn btn-primary px-5 py-2 text-xs uppercase tracking-wider rounded-sm flex items-center gap-1.5"
           >
             <Shield size={13} />
@@ -137,7 +137,7 @@ const Header = ({ activePage, setActivePage }) => {
               <span>Call: 0330 2051221</span>
             </a>
             <button
-              onClick={() => handleNavClick('contact')}
+              onClick={() => { setOpenQuoteForm(true); handleNavClick('contact'); }}
               className="btn btn-primary w-full p-3 text-sm uppercase tracking-wider rounded-sm flex items-center justify-center gap-2"
             >
               <Shield size={16} />

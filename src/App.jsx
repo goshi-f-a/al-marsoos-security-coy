@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 
 function App() {
   const [activePage, setActivePage] = useState('home');
+  const [openQuoteForm, setOpenQuoteForm] = useState(false);
 
   const renderActivePage = () => {
     switch (activePage) {
@@ -19,7 +20,7 @@ function App() {
       case 'careers':
         return <Careers />;
       case 'contact':
-        return <Contact />;
+        return <Contact openQuoteForm={openQuoteForm} setOpenQuoteForm={setOpenQuoteForm} />;
       default:
         return <Home setActivePage={setActivePage} />;
     }
@@ -28,7 +29,7 @@ function App() {
   return (
     <div className="min-h-screen bg-[#0a0b0e] text-white flex flex-col selection:bg-[#d32f2f] selection:text-white">
       {/* Navigation Header */}
-      <Header activePage={activePage} setActivePage={setActivePage} />
+      <Header activePage={activePage} setActivePage={setActivePage} setOpenQuoteForm={setOpenQuoteForm} />
 
       {/* Main Page Area */}
       <main className="flex-1 flex flex-col">
