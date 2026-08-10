@@ -194,12 +194,12 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
       </section>
 
       {/* Calculator & Contact Details Info */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-start">
             
-            {/* Left Side: Contact details and office location map */}
-            <div className="lg:col-span-5 flex flex-col gap-8">
+            {/* Left Side: Contact details and office location map (Left Half) */}
+            <div className="md:col-span-5 flex flex-col gap-6 w-full">
               <div className="glass-card p-8 border border-white/5 flex flex-col gap-6">
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-white font-outfit uppercase tracking-wider">
@@ -321,8 +321,8 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
               </div>
             </div>
 
-            {/* Right Side: Calculator and Request Quote form */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            {/* Right Side: Calculator and Request Quote form (Right Half) */}
+            <div className="md:col-span-7 flex flex-col gap-6 w-full">
               
               {/* Quote Calculator Card */}
               <div className="glass-card p-8 border border-white/5 flex flex-col gap-6">
@@ -540,10 +540,10 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Interactive Annotated Map Column (lg:col-span-7) */}
-            <div className="lg:col-span-7 flex justify-center w-full">
+            {/* Interactive Annotated Map Column (md:col-span-7) */}
+            <div className="md:col-span-7 flex justify-center w-full">
               <div className="relative w-full max-w-[550px] aspect-[4/3] bg-[#07080a] border border-white/5 rounded-lg overflow-hidden p-4 flex items-center justify-center">
                 {/* SVG Map of Pakistan Outline (Styled and Annotated) */}
                 <svg viewBox="0 0 500 400" className="w-full h-full text-slate-700 select-none">
@@ -630,8 +630,8 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
               </div>
             </div>
 
-            {/* Selected Branch Details Column (lg:col-span-5) */}
-            <div className="lg:col-span-5 w-full">
+            {/* Selected Branch Details Column (md:col-span-5) */}
+            <div className="md:col-span-5 w-full">
               <div className="glass-card p-6 border border-white/10 flex flex-col gap-6 relative min-h-[300px] justify-between">
                 
                 <div>
