@@ -39,10 +39,12 @@
 }
 
 /* Reset and Core Styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html, body {
@@ -236,17 +238,34 @@ button, input, textarea, select {
 .badge {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 6px;
-  padding: 0.35rem 0.85rem;
+  height: auto;
+  padding: 0.4rem 0.85rem;
   background-color: rgba(211, 47, 47, 0.15);
   border: 1px solid rgba(211, 47, 47, 0.3);
   color: #ff5252;
   font-size: 0.8rem;
   font-weight: 600;
+  line-height: 1.4;
   border-radius: 50px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-family: 'Outfit', sans-serif;
+  margin-bottom: 0.25rem;
+}
+@media (max-width: 640px) {
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.75rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+    max-width: 90%;
+    position: relative;
+    z-index: 1;
+    clear: both;
+  }
 }
 
 /* Form Styles */
@@ -329,13 +348,13 @@ button, input, textarea, select {
   }
 }
 
-/* Page Wrapper Spacing for Fixed Header Offset */
+/* Page Wrapper Spacing — offset now handled by <main> in App.jsx */
 .page-wrapper-spacing {
-  padding-top: 110px;
+  padding-top: 0;
 }
 @media (max-width: 768px) {
   .page-wrapper-spacing {
-    padding-top: 80px;
+    padding-top: 0;
   }
 }
 
@@ -353,4 +372,14 @@ button, input, textarea, select {
   border-left-color: #d32f2f;
   background-color: rgba(211, 47, 47, 0.1);
   color: #ffffff;
+}
+
+/* Hero guard image: hide on mobile, show on desktop */
+.hero-guard {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .hero-guard {
+    display: block;
+  }
 }

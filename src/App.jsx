@@ -40,8 +40,8 @@ function App() {
       {/* Navigation Header */}
       <Header activePage={activePage} setActivePage={setActivePage} setOpenQuoteForm={setOpenQuoteForm} />
 
-      {/* Main Page Area */}
-      <main className="flex-1 flex flex-col">
+      {/* Main Page Area — refined responsive header clearance */}
+      <main className="flex-1 flex flex-col pt-[72px] sm:pt-[88px]">
         {renderActivePage()}
       </main>
 

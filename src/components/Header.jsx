@@ -46,8 +46,8 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-4 bg-[#0a0b0e]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
-          : 'py-6 bg-transparent'
+          ? 'py-2.5 sm:py-4 bg-[#0a0b0e]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
+          : 'py-3.5 sm:py-6 bg-transparent'
       }`}
       style={{
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -64,7 +64,7 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
             <span className="font-extrabold text-lg tracking-wider text-white font-outfit uppercase leading-tight">
               Al-Marsoos
             </span>
-            <span className="text-[10px] tracking-[0.2em] font-semibold text-[#d32f2f] uppercase leading-none font-outfit">
+            <span className="hidden sm:block text-[10px] tracking-[0.2em] font-semibold text-[#d32f2f] uppercase leading-none font-outfit">
               Security Services
             </span>
           </div>

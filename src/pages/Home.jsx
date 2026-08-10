@@ -35,7 +35,7 @@ const Home = ({ setActivePage }) => {
   return (
     <div className="flex flex-col w-full font-outfit">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-[#07080a] pt-24 overflow-hidden">
+      <section className="relative min-h-[calc(100vh-72px)] sm:min-h-[calc(100vh-88px)] flex items-start md:items-center justify-center bg-[#07080a] overflow-hidden">
         {/* ── BACKGROUND: new guard image darkened — building shows as moody backdrop ── */}
         <div className="absolute inset-0 z-0">
           <img
@@ -54,19 +54,20 @@ const Home = ({ setActivePage }) => {
         <img
           src={heroGuardSolo}
           alt="AMS Security Officer"
-          className="absolute bottom-0 right-[5%] h-[92%] w-auto object-contain z-10 animate-fade-in select-none pointer-events-none"
+          className="hero-guard absolute bottom-0 right-[3%] h-[90%] w-auto object-contain z-20 animate-fade-in select-none pointer-events-none"
           style={{
-            maskImage: 'linear-gradient(to right, transparent 0%, black 18%), linear-gradient(to top, transparent 0%, black 12%)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 18%), linear-gradient(to top, transparent 0%, black 12%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 22%), linear-gradient(to top, transparent 0%, black 12%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 22%), linear-gradient(to top, transparent 0%, black 12%)',
             maskComposite: 'intersect',
             WebkitMaskComposite: 'source-in',
             filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.9))'
           }}
         />
 
-        <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-16">
-          <div className="lg:col-span-8 flex flex-col items-start gap-6 animate-fade-in">
-            <span className="badge">
+        <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-3 sm:pt-6 pb-12 sm:pb-16 md:py-16">
+          <div className="lg:col-span-6 flex flex-col items-start gap-4 sm:gap-6 animate-fade-in">
+            {/* Badge — rendered in hero section, safely below fixed navbar */}
+            <span className="badge" style={{ width: 'fit-content', maxWidth: '90%', display: 'inline-flex' }}>
               <Shield size={12} />
               Professional Security You Can Trust
             </span>
