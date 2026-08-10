@@ -270,17 +270,7 @@ Sent from Al-Marsoos Official Website`;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
-    setLastSubmittedMessage(msg);
-
-    // Simulate Server Submission & provide messaging options
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1000);
+    handleWhatsAppDispatch();
   };
 
   return (
@@ -662,7 +652,7 @@ Sent from Al-Marsoos Official Website`;
                           />
                         </div>
 
-                        {/* Dual Messaging & Submission Action Buttons */}
+                        {/* Instant Messaging Dispatch Action Buttons */}
                         <div className="flex flex-col gap-3 mt-3">
                           {/* WhatsApp Instant Send */}
                           <button
@@ -687,22 +677,6 @@ Sent from Al-Marsoos Official Website`;
                               <span>Send via GSM SMS (Cellular SIM)</span>
                             </button>
                           )}
-
-                          {/* Standard Direct Web Submission */}
-                          <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="btn btn-secondary w-full uppercase tracking-wider text-xs rounded-sm flex items-center justify-center gap-2 py-2.5"
-                          >
-                            {isSubmitting ? (
-                              <span>Logging Inquiry...</span>
-                            ) : (
-                              <>
-                                <Send size={13} />
-                                <span>Submit Direct Web Inquiry</span>
-                              </>
-                            )}
-                          </button>
                         </div>
                       </form>
                     )}
