@@ -47,7 +47,7 @@ const ChatWidget = ({ setActivePage }) => {
       } else if (query.includes('safdar') || query.includes('malik') || query.includes('marketing') || query.includes('manager')) {
         responseText = 'You can reach Mr. Safdar Malik (General Manager Marketing) directly on his mobile lines: 03302051221 / 03025772842 or write to marketing@almarsoos.com.';
       } else if (query.includes('location') || query.includes('address') || query.includes('office') || query.includes('islamabad')) {
-        responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. Feel free to visit during business hours (9 AM - 5 PM).';
+        responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. You can view our location on Google Maps: https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9 or visit during business hours (9 AM - 5 PM).';
       } else {
         responseText = 'Thank you for your message. Your safety is our mission. For urgent emergencies, please call us directly at 03302051221. For general inquiries, we will get back to you shortly.';
       }

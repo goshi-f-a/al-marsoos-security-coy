@@ -114,7 +114,18 @@ const Footer = ({ setActivePage }) => {
           <ul className="flex flex-col gap-4 text-sm">
             <li className="flex gap-3">
               <MapPin size={18} className="text-[#d32f2f] shrink-0 mt-0.5" />
-              <span>Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.</span>
+              <a
+                href="https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors flex flex-col group text-slate-400"
+                title="Open location on Google Maps"
+              >
+                <span>Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.</span>
+                <span className="text-[10px] text-[#d32f2f] group-hover:underline font-semibold mt-0.5">
+                  View on Google Maps &rarr;
+                </span>
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <Phone size={16} className="text-[#d32f2f] shrink-0" />

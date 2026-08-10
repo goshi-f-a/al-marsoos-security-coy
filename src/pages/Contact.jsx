@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown } from 'lucide-react';
+import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown, ExternalLink, Navigation, CheckCircle2 } from 'lucide-react';
 
 const branches = [
   {
@@ -8,7 +8,7 @@ const branches = [
     name: 'Islamabad Headquarters',
     address: 'Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.',
     phone: '0330 2051221 / 0302 5772842',
-    mapUrl: 'https://maps.google.com/?q=33.633407629053465,72.93729544717415',
+    mapUrl: 'https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9',
     x: 315,
     y: 120
   },
@@ -167,16 +167,16 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.phone) {
       alert('Please fill in all required fields.');
-      return;
-    }
-    setIsSubmitting(true);
+    } else {
+      setIsSubmitting(true);
 
-    // Simulate Server Submission API
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: '', email: '', phone: '', notes: '' });
-    }, 1500);
+      // Simulate Server Submission API
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setFormData({ name: '', email: '', phone: '', notes: '' });
+      }, 1500);
+    }
   };
 
   return (
@@ -201,9 +201,15 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
             {/* Left Side: Contact details and office location map */}
             <div className="lg:col-span-5 flex flex-col gap-8">
               <div className="glass-card p-8 border border-white/5 flex flex-col gap-6">
-                <h3 className="text-xl font-bold text-white font-outfit uppercase tracking-wider">
-                  Islamabad Headquarters
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-white font-outfit uppercase tracking-wider">
+                    Islamabad Headquarters
+                  </h3>
+                  <span className="flex items-center gap-1 text-[10px] uppercase font-bold text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full">
+                    <CheckCircle2 size={11} />
+                    Verified On Map
+                  </span>
+                </div>
                 <p className="text-xs text-slate-400 font-sans leading-relaxed">
                   Our main office is situated at Motorway Chowk, Islamabad. Visit us to review deployment procedures and licensing documents.
                 </p>
@@ -216,6 +222,15 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                       <p className="text-xs text-slate-400 font-sans mt-0.5">
                         Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.
                       </p>
+                      <a
+                        href="https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs text-[#d32f2f] hover:text-white font-semibold mt-2 transition-colors group"
+                      >
+                        <span>Open on Google Maps</span>
+                        <ExternalLink size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                      </a>
                     </div>
                   </div>
 
@@ -243,57 +258,66 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                 </div>
               </div>
 
-              {/* Stylized Dark SVG Map */}
-              <div className="glass-card p-6 border border-white/5 flex flex-col gap-3">
-                <h4 className="text-white font-bold text-sm uppercase tracking-widest text-[#d32f2f]">
-                  AMS Location Representation
-                </h4>
-                <a
-                  href="https://maps.google.com/?q=33.633407629053465,72.93729544717415"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#07080a] border border-white/5 rounded-md h-[220px] relative overflow-hidden flex items-center justify-center group hover:border-[#d32f2f]/30 transition-colors w-full cursor-pointer"
-                  title="Click to View on Google Maps"
-                >
-                  
-                  {/* Decorative High-End Map Lines SVG */}
-                  <svg width="100%" height="100%" viewBox="0 0 400 220" className="absolute inset-0 opacity-40">
-                    <defs>
-                      <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#1e2230" />
-                        <stop offset="100%" stopColor="#0a0b0e" />
-                      </linearGradient>
-                    </defs>
-                    <rect width="400" height="220" fill="url(#mapGrad)" />
-                    {/* Road Network Lines */}
-                    <path d="M-20,110 L420,110" stroke="#2d3748" strokeWidth="20" />
-                    <path d="M-20,110 L420,110" stroke="#1a202c" strokeWidth="2" strokeDasharray="5 5" />
-                    
-                    <path d="M220,-20 L220,240" stroke="#2d3748" strokeWidth="25" />
-                    <path d="M220,-20 L220,240" stroke="#1a202c" strokeWidth="2" strokeDasharray="5 5" />
-
-                    <path d="M-20,30 C150,30 200,80 220,110" fill="none" stroke="#2d3748" strokeWidth="12" />
-                    <path d="M220,110 C240,140 280,190 420,190" fill="none" stroke="#2d3748" strokeWidth="12" />
-                    
-                    {/* Ring Road Grid */}
-                    <circle cx="220" cy="110" r="45" fill="none" stroke="#2d3748" strokeWidth="15" />
-                    <circle cx="220" cy="110" r="45" fill="none" stroke="#4a5568" strokeWidth="1" strokeDasharray="3 3" />
-                  </svg>
-
-                  {/* Location Pin overlay */}
-                  <div className="absolute top-[92px] left-[202px] flex flex-col items-center group-hover:scale-105 transition-transform duration-200">
-                    <span className="w-5 h-5 bg-[#d32f2f] rounded-full border-2 border-white flex items-center justify-center shadow-[0_0_15px_#d32f2f] animate-pulse">
-                      <ShieldCheck size={10} className="text-white" />
-                    </span>
-                    <span className="bg-[#11131c] text-white text-[9px] font-bold px-2 py-0.5 rounded-sm border border-white/10 mt-1 whitespace-nowrap">
-                      AMS HQs (Gillani Plaza)
-                    </span>
+              {/* Live Interactive Google Map Card */}
+              <div className="glass-card p-6 border border-white/5 flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#d32f2f] animate-pulse" />
+                    <h4 className="text-white font-bold text-sm uppercase tracking-widest text-[#d32f2f]">
+                      Live Google Maps Location
+                    </h4>
                   </div>
+                  <span className="text-[10px] text-slate-400 font-mono">33.6334° N, 72.9375° E</span>
+                </div>
 
-                  <span className="absolute bottom-3 left-3 text-[10px] text-slate-500 font-sans group-hover:text-slate-300 transition-colors">
-                    Motorway Chowk Cross, Islamabad (Click to View on Google Maps)
-                  </span>
-                </a>
+                {/* Google Maps Responsive Frame */}
+                <div className="bg-[#07080a] border border-white/10 rounded-lg overflow-hidden relative shadow-lg group">
+                  <iframe
+                    title="Al-Marsoos Security (Head Office) Map"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3525.2113800921634!2d72.9375086!3d33.63339450000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df978a7dcb3cd7%3A0x894cd8f9ac36206c!2sAl-Marsoos%20Security%20(Head%20Office)!5e1!3m2!1sen!2s!4v1786380531784!5m2!1sen!2s"
+                    className="w-full h-[280px] border-0 filter contrast-[1.05] opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                  
+                  {/* Floating Pin Label Overlay */}
+                  <div className="absolute top-3 left-3 pointer-events-none bg-[#0a0b0e]/90 backdrop-blur-md px-3 py-1.5 rounded border border-white/10 shadow-md">
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck size={14} className="text-[#d32f2f]" />
+                      <span className="text-xs font-bold text-white uppercase tracking-wider">
+                        Al-Marsoos Security (Head Office)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1 text-xs text-slate-400 font-sans">
+                  <span className="text-white font-medium">Motorway, Gillani Rd, Choke, Islamabad, 44150, Pakistan</span>
+                </div>
+
+                {/* Action Buttons Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                  <a
+                    href="https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary py-2.5 text-xs uppercase tracking-wider flex items-center justify-center gap-2 rounded-sm shadow-md"
+                  >
+                    <ExternalLink size={14} />
+                    <span>Open in Google Maps</span>
+                  </a>
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=33.6333945,72.9375086"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary py-2.5 text-xs uppercase tracking-wider flex items-center justify-center gap-2 rounded-sm border border-white/10 hover:border-[#d32f2f]/40"
+                  >
+                    <Navigation size={14} className="text-[#d32f2f]" />
+                    <span>Get Directions</span>
+                  </a>
+                </div>
               </div>
             </div>
 
