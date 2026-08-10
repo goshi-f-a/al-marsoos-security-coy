@@ -112,25 +112,7 @@ const Credentials = () => {
   ];
 
   const toggleTab = (id) => {
-    setExpandedTab((prev) => {
-      const next = prev === id ? null : id;
-      if (next) {
-        // Smoothly glide viewport to the opened panel so user sees it clearly
-        setTimeout(() => {
-          const el = document.getElementById(`panel-${id}`);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            const offset = 90; // Header height + breathing room
-            const targetY = window.scrollY + rect.top - offset;
-            window.scrollTo({
-              top: targetY,
-              behavior: 'smooth'
-            });
-          }
-        }, 120);
-      }
-      return next;
-    });
+    setExpandedTab((prev) => (prev === id ? null : id));
   };
 
   return (
