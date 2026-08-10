@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Shield, Eye, ShieldAlert, Award, Star, Compass, PhoneCall } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Shield, Eye, ShieldAlert, Star, Compass, PhoneCall } from 'lucide-react';
 import heroGuard from '../assets/hero_guard.jpg';
 import eventSecurity from '../assets/event_security.jpg';
 import residentialSecurity from '../assets/residential_security.jpg';
 import commercialSecurity from '../assets/commercial_security.jpg';
 
-const Services = ({ setActivePage }) => {
+const Services = () => {
   const [activeTab, setActiveTab] = useState('manned');
 
   const categories = [
@@ -211,13 +212,13 @@ const Services = ({ setActivePage }) => {
                   </div>
 
                   <div className="flex justify-end border-t border-white/5 pt-6 mt-2">
-                    <button
-                      onClick={() => setActivePage('contact')}
+                    <Link
+                      to="/contact?quote=true"
                       className="btn btn-primary px-8 text-xs uppercase tracking-wider rounded-sm flex items-center gap-2"
                     >
                       <Shield size={14} />
                       {currentData.ctaText} &rarr;
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

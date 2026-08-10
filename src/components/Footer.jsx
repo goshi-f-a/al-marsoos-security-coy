@@ -1,19 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Phone, Mail, MapPin, Shield, CheckCircle } from 'lucide-react';
 
-const Footer = ({ setActivePage }) => {
-  const handleNavClick = (id) => {
-    setActivePage(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+const Footer = () => {
   return (
     <footer className="bg-[#07080a] border-t border-white/5 pt-16 pb-8 text-slate-400 font-outfit">
       <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         {/* Brand Column */}
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => handleNavClick('home')}>
+          <Link to="/" className="flex items-center gap-3 group">
             <Logo size={42} />
             <div className="flex flex-col">
               <span className="font-extrabold text-base tracking-wider text-white uppercase leading-tight">
@@ -23,7 +19,7 @@ const Footer = ({ setActivePage }) => {
                 Security Services
               </span>
             </div>
-          </div>
+          </Link>
           <p className="text-sm text-slate-400 mt-2">
             Providing premium, elite, and military-disciplined protection systems across Pakistan. Led by retired army command expertise.
           </p>
@@ -40,39 +36,39 @@ const Footer = ({ setActivePage }) => {
           </h4>
           <ul className="flex flex-col gap-3 text-sm">
             <li>
-              <button onClick={() => handleNavClick('home')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 Home Page
-              </button>
+              </Link>
             </li>
             <li>
-              <button onClick={() => handleNavClick('ceo-message')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/ceo-message" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 CEO's Message
-              </button>
+              </Link>
             </li>
             <li>
-              <button onClick={() => handleNavClick('leadership')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/leadership" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 Our Leadership
-              </button>
+              </Link>
             </li>
             <li>
-              <button onClick={() => handleNavClick('credentials')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/credentials" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 Licenses & Credentials
-              </button>
+              </Link>
             </li>
             <li>
-              <button onClick={() => handleNavClick('services')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/services" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 Our Services
-              </button>
+              </Link>
             </li>
             <li>
-              <button onClick={() => handleNavClick('careers')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/careers" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 Careers & Join Us
-              </button>
+              </Link>
             </li>
             <li>
-              <button onClick={() => handleNavClick('contact')} className="hover:text-white transition-colors hover:translate-x-1 duration-200 text-left">
+              <Link to="/contact" className="hover:text-white transition-colors hover:translate-x-1 duration-200 block text-left">
                 Contact & Quote Form
-              </button>
+              </Link>
             </li>
           </ul>
         </div>

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import { Menu, X, Shield, Phone, ChevronDown } from 'lucide-react';
 
-const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,26 +23,37 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
   }, []);
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
+    { id: 'home', path: '/', label: 'Home' },
     {
       id: 'about',
       label: 'About Us',
       isDropdown: true,
       subLinks: [
-        { id: 'ceo-message', label: "CEO's Message" },
-        { id: 'leadership', label: 'Our Leadership' },
-        { id: 'credentials', label: 'Licenses & Credentials' }
+        { id: 'ceo-message', path: '/ceo-message', label: "CEO's Message" },
+        { id: 'leadership', path: '/leadership', label: 'Our Leadership' },
+        { id: 'credentials', path: '/credentials', label: 'Licenses & Credentials' }
       ]
     },
-    { id: 'services', label: 'Services' },
-    { id: 'careers', label: 'Careers' },
-    { id: 'contact', label: 'Contact Us' }
+    { id: 'services', path: '/services', label: 'Services' },
+    { id: 'careers', path: '/careers', label: 'Careers' },
+    { id: 'contact', path: '/contact', label: 'Contact Us' }
   ];
 
-  const handleNavClick = (id) => {
-    setActivePage(id);
+  const isLinkActive = (link) => {
+    if (link.path === '/') {
+      return location.pathname === '/' || location.pathname === '/home';
+    }
+    return location.pathname === link.path;
+  };
+
+  const handleMobileNavClick = () => {
     setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMobileAboutOpen(false);
+  };
+
+  const handleGetQuoteClick = () => {
+    setIsMobileMenuOpen(false);
+    navigate('/contact?quote=true');
   };
 
   return (
@@ -55,9 +69,10 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
     >
       <div className="container flex items-center justify-between">
         {/* Brand Logo and Name */}
-        <div 
-          className="flex items-center gap-3 cursor-pointer group"
-          onClick={() => handleNavClick('home')}
+        <Link 
+          to="/"
+          className="flex items-center gap-3 group"
+          onClick={handleMobileNavClick}
         >
           <Logo size={46} className="transform group-hover:scale-105 transition-transform duration-300" />
           <div className="flex flex-col">
@@ -68,13 +83,13 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
               Security Services
             </span>
           </div>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             if (link.isDropdown) {
-              const isSubActive = link.subLinks.some(sub => activePage === sub.id);
+              const isSubActive = link.subLinks.some(sub => location.pathname === sub.path);
               return (
                 <div key={link.id} className="relative group py-2">
                   <button
@@ -98,15 +113,15 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
                   <div className="absolute top-full left-0 pt-1.5 w-64 hidden group-hover:block animate-fade-in z-50">
                     <div className="bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2">
                       {link.subLinks.map((sub) => (
-                        <button
+                        <Link
                           key={sub.id}
-                          onClick={() => handleNavClick(sub.id)}
+                          to={sub.path}
                           className={`dropdown-item w-full text-left px-4 py-3 text-xs font-medium font-outfit transition-all duration-200 block ${
-                            activePage === sub.id ? 'active text-white' : 'text-slate-400'
+                            location.pathname === sub.path ? 'active text-white' : 'text-slate-400 hover:text-white'
                           }`}
                         >
                           {sub.label}
-                        </button>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -114,26 +129,26 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
               );
             }
 
+            const active = isLinkActive(link);
+
             return (
-                <button
+              <Link
                 key={link.id}
-                onClick={() => handleNavClick(link.id)}
+                to={link.path}
                 className={`relative text-sm font-semibold tracking-wide transition-all duration-200 py-1 font-outfit group/nav ${
-                  activePage === link.id
-                    ? 'text-white'
-                    : 'text-slate-400 hover:text-white'
+                  active ? 'text-white' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {link.label}
                 {/* Active underline */}
-                {activePage === link.id && (
+                {active && (
                   <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full animate-fade-in" />
                 )}
                 {/* Hover underline — only when not active */}
-                {activePage !== link.id && (
+                {!active && (
                   <span className="absolute bottom-0 left-0 h-[2px] bg-[#d32f2f]/60 rounded-full w-0 group-hover/nav:w-full transition-all duration-300" />
                 )}
-              </button>
+              </Link>
             );
           })}
         </nav>
@@ -148,7 +163,7 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
             <span>0330 2051221</span>
           </a>
           <button
-            onClick={() => { setOpenQuoteForm(true); handleNavClick('contact'); }}
+            onClick={handleGetQuoteClick}
             className="btn btn-primary px-5 py-2 text-xs uppercase tracking-wider rounded-sm flex items-center gap-1.5"
           >
             <Shield size={13} />
@@ -174,7 +189,7 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
           <div className="flex flex-col gap-5 mt-4">
             {navLinks.map((link) => {
               if (link.isDropdown) {
-                const isSubActive = link.subLinks.some(sub => activePage === sub.id);
+                const isSubActive = link.subLinks.some(sub => location.pathname === sub.path);
                 return (
                   <div key={link.id} className="flex flex-col gap-2">
                     <button
@@ -189,15 +204,16 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
                     {isMobileAboutOpen && (
                       <div className="flex flex-col gap-3 pl-4 py-2.5 bg-white/5 rounded-md border border-white/5 animate-fade-in">
                         {link.subLinks.map((sub) => (
-                          <button
+                          <Link
                             key={sub.id}
-                            onClick={() => handleNavClick(sub.id)}
+                            to={sub.path}
+                            onClick={handleMobileNavClick}
                             className={`text-left text-sm font-semibold font-outfit py-1 transition-colors block ${
-                              activePage === sub.id ? 'text-[#d32f2f]' : 'text-slate-400 hover:text-white'
+                              location.pathname === sub.path ? 'text-[#d32f2f]' : 'text-slate-400 hover:text-white'
                             }`}
                           >
                             {sub.label}
-                          </button>
+                          </Link>
                         ))}
                       </div>
                     )}
@@ -205,18 +221,21 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
                 );
               }
 
+              const active = isLinkActive(link);
+
               return (
-                <button
+                <Link
                   key={link.id}
-                  onClick={() => handleNavClick(link.id)}
-                  className={`text-left text-xl font-bold font-outfit py-2 border-b border-white/5 transition-all ${
-                    activePage === link.id
+                  to={link.path}
+                  onClick={handleMobileNavClick}
+                  className={`text-left text-xl font-bold font-outfit py-2 border-b border-white/5 transition-all block ${
+                    active
                       ? 'text-[#d32f2f] pl-2 border-l-2 border-l-[#d32f2f]'
                       : 'text-slate-300 hover:text-white'
                   }`}
                 >
                   {link.label}
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -230,7 +249,7 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
               <span>Call: 0330 2051221</span>
             </a>
             <button
-              onClick={() => { setOpenQuoteForm(true); handleNavClick('contact'); }}
+              onClick={handleGetQuoteClick}
               className="btn btn-primary w-full p-3 text-sm uppercase tracking-wider rounded-sm flex items-center justify-center gap-2"
             >
               <Shield size={16} />

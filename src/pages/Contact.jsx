@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown, ExternalLink, Navigation, CheckCircle2 } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown, ExternalLink, Navigation, CheckCircle2, Smartphone, MessageCircle } from 'lucide-react';
+import { isMobileDevice, getWhatsAppUrl, getGsmSmsUrl } from '../utils/device';
 
 const branches = [
   {
@@ -94,44 +96,101 @@ const branches = [
   }
 ];
 
-const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
+const RATES = {
+  static_armed: { '12h': 45000, '24h': 85000 },
+  static_unarmed: { '12h': 35000, '24h': 65000 },
+  event_guard: { 'event': 5000 },
+  patrol_vehicle: { '12h': 120000, '24h': 220000 }
+};
+
+const Contact = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     notes: ''
   });
+  const [isNotesEdited, setIsNotesEdited] = useState(false);
   const [calc, setCalc] = useState({
     service: 'static_armed',
     guardCount: 1,
     duration: '12h',
     contractLength: '1m'
   });
-  const [estimatedCost, setEstimatedCost] = useState(0);
+  const [estimatedCost, setEstimatedCost] = useState(45000);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(branches[0]);
+  const [lastSubmittedMessage, setLastSubmittedMessage] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Auto-open form and scroll to it when triggered from "Get a Quote" button
+  const buildDraftMessage = (form, calcConfig, cost) => {
+    const serviceNames = {
+      static_armed: 'Static Armed Guard',
+      static_unarmed: 'Static Unarmed Guard',
+      patrol_vehicle: 'Mobile Patrol Vehicle + Supervisor',
+      event_guard: 'Event Host Guard (1 Day Event)'
+    };
+    const shiftLabels = {
+      '12h': '12 Hours / Day (1 Guard Shift)',
+      '24h': '24 Hours / Day (2 Guard Shifts)'
+    };
+    const contractLabels = {
+      '1m': '1 Month (Standard Rate)',
+      '6m': '6 Months (5% Discount)',
+      '12m': '12 Months (10% Discount)'
+    };
+
+    const sLabel = serviceNames[calcConfig.service] || calcConfig.service;
+    const shiftText = calcConfig.service === 'event_guard' ? 'Single Event Session' : (shiftLabels[calcConfig.duration] || calcConfig.duration);
+    const contractText = calcConfig.service === 'event_guard' ? 'Event Date Coverage' : (contractLabels[calcConfig.contractLength] || calcConfig.contractLength);
+    const billingPeriod = calcConfig.service === 'event_guard' ? '/ event' : '/ month';
+
+    return `*AL-MARSOOS SECURITY - QUOTE INQUIRY*
+━━━━━━━━━━━━━━━━━━━━
+👤 *Client Name:* ${form.name.trim() ? form.name.trim() : '[Your Name]'}
+📞 *Phone:* ${form.phone.trim() ? form.phone.trim() : '[Your Phone]'}
+✉️ *Email:* ${form.email.trim() ? form.email.trim() : 'Not provided'}
+
+🛡️ *Service:* ${sLabel}
+👥 *Guards/Assets:* ${calcConfig.guardCount} Guard(s)
+⏱️ *Shift Coverage:* ${shiftText}
+📅 *Contract Length:* ${contractText}
+💰 *Estimated Cost:* PKR ${cost.toLocaleString()} ${billingPeriod} (negotiation possible)
+
+📍 *Location & Special Requirements:*
+[e.g. Islamabad premises, main gate & surveillance check]
+━━━━━━━━━━━━━━━━━━━━
+Sent from Al-Marsoos Official Website`;
+  };
+
   useEffect(() => {
-    if (openQuoteForm) {
+    setIsMobile(isMobileDevice());
+  }, []);
+
+  // Initialize pre-filled note on first render
+  useEffect(() => {
+    setFormData((prev) => {
+      if (!prev.notes) {
+        return { ...prev, notes: buildDraftMessage(prev, calc, 45000) };
+      }
+      return prev;
+    });
+  }, []);
+
+  // Auto-open form and scroll to it when triggered from "Get a Quote" button (?quote=true)
+  useEffect(() => {
+    if (searchParams.get('quote') === 'true') {
       setIsFormOpen(true);
-      setOpenQuoteForm(false);
+      setSearchParams({}, { replace: true });
       setTimeout(() => {
         const el = document.getElementById('quote-form-panel');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 100);
+      }, 150);
     }
-  }, [openQuoteForm]);
-
-  // Rate Constants (in PKR per Guard per month/event)
-  const RATES = {
-    static_armed: { '12h': 45000, '24h': 85000 },
-    static_unarmed: { '12h': 35000, '24h': 65000 },
-    event_guard: { 'event': 5000 }, // per event rate
-    patrol_vehicle: { '12h': 120000, '24h': 220000 }
-  };
+  }, [searchParams, setSearchParams]);
 
   useEffect(() => {
     let cost = 0;
@@ -150,12 +209,32 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
         cost = cost * 0.90; // 10% discount
       }
     }
-    setEstimatedCost(Math.round(cost));
-  }, [calc]);
+    const finalCost = Math.round(cost);
+    setEstimatedCost(finalCost);
+
+    // Keep textarea updated in real time if user hasn't typed custom override in notes
+    if (!isNotesEdited) {
+      setFormData((prev) => ({
+        ...prev,
+        notes: buildDraftMessage(prev, calc, finalCost)
+      }));
+    }
+  }, [calc, isNotesEdited]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'notes') {
+      setIsNotesEdited(true);
+      setFormData((prev) => ({ ...prev, notes: value }));
+    } else {
+      setFormData((prev) => {
+        const nextForm = { ...prev, [name]: value };
+        if (!isNotesEdited) {
+          nextForm.notes = buildDraftMessage(nextForm, calc, estimatedCost);
+        }
+        return nextForm;
+      });
+    }
   };
 
   const handleCalcChange = (e) => {
@@ -163,20 +242,45 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
     setCalc((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      alert('Please enter your Name and Phone Number to submit the quote.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleWhatsAppDispatch = () => {
+    if (!validateForm()) return;
+    const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
+    setLastSubmittedMessage(msg);
+    const url = getWhatsAppUrl('923302051221', msg);
+    window.open(url, '_blank', 'noopener,noreferrer');
+    setIsSuccess(true);
+  };
+
+  const handleGsmSmsDispatch = () => {
+    if (!validateForm()) return;
+    const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
+    setLastSubmittedMessage(msg);
+    const url = getGsmSmsUrl('+923302051221', msg);
+    window.location.href = url;
+    setIsSuccess(true);
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.phone) {
-      alert('Please fill in all required fields.');
-    } else {
-      setIsSubmitting(true);
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
+    setLastSubmittedMessage(msg);
 
-      // Simulate Server Submission API
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSuccess(true);
-        setFormData({ name: '', email: '', phone: '', notes: '' });
-      }, 1500);
-    }
+    // Simulate Server Submission & provide messaging options
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+    }, 1000);
   };
 
   return (
@@ -399,9 +503,14 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                 <div className="bg-[#07080a] border border-white/5 p-6 rounded-md flex flex-col sm:flex-row justify-between items-center gap-4">
                   <div className="flex flex-col">
                     <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Estimated Cost</span>
-                    <span className="text-2xl sm:text-3xl font-extrabold text-[#d32f2f] font-outfit">
-                      PKR {estimatedCost.toLocaleString()}
-                    </span>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-2xl sm:text-3xl font-extrabold text-[#d32f2f] font-outfit">
+                        PKR {estimatedCost.toLocaleString()}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-400 font-outfit">
+                        (negotiation possible)
+                      </span>
+                    </div>
                     <span className="text-[10px] text-slate-500 mt-1 font-sans">
                       {calc.service === 'event_guard' ? '* Estimated cost per event session' : '* Estimated monthly billing (taxes not included)'}
                     </span>
@@ -441,13 +550,42 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                         <div className="w-14 h-14 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center text-green-500">
                           <Check size={28} />
                         </div>
-                        <h4 className="text-white font-bold text-lg font-outfit uppercase">Inquiry Received!</h4>
+                        <h4 className="text-white font-bold text-lg font-outfit uppercase">Inquiry Logged!</h4>
                         <p className="text-slate-300 text-xs font-sans max-w-sm">
-                          We have received your estimate query. Mr. Safdar Malik (General Manager Marketing) will reach out to you within 2 hours to confirm deployment terms and finalize plans.
+                          Your quote inquiry has been formatted. You can connect directly with Mr. Safdar Malik (General Manager Marketing) on WhatsApp or Phone:
                         </p>
+
+                        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-2">
+                          <a
+                            href={getWhatsAppUrl('923302051221', lastSubmittedMessage || 'Hello, I submitted a security quote inquiry.')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 py-2.5 px-3 rounded-sm bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all"
+                          >
+                            <MessageCircle size={14} />
+                            <span>WhatsApp Chat</span>
+                          </a>
+                          <a
+                            href="tel:03302051221"
+                            className="flex-1 py-2.5 px-3 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all"
+                          >
+                            <Phone size={14} className="text-[#d32f2f]" />
+                            <span>Direct Hotline</span>
+                          </a>
+                        </div>
+
                         <button
-                          onClick={() => setIsSuccess(false)}
-                          className="btn btn-secondary text-xs uppercase tracking-wider mt-2"
+                          onClick={() => {
+                            setIsSuccess(false);
+                            setIsNotesEdited(false);
+                            setFormData({
+                              name: '',
+                              email: '',
+                              phone: '',
+                              notes: buildDraftMessage({ name: '', email: '', phone: '', notes: '' }, calc, estimatedCost)
+                            });
+                          }}
+                          className="btn btn-secondary text-xs uppercase tracking-wider mt-3"
                         >
                           Submit Another Query
                         </button>
@@ -482,7 +620,7 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                         </div>
 
                         <div className="form-group">
-                          <label className="form-label">Email Address *</label>
+                          <label className="form-label">Email Address (Optional)</label>
                           <input
                             type="email"
                             name="email"
@@ -490,35 +628,82 @@ const Contact = ({ openQuoteForm, setOpenQuoteForm }) => {
                             onChange={handleInputChange}
                             placeholder="e.g. client@domain.com"
                             className="form-input"
-                            required
                           />
                         </div>
 
                         <div className="form-group">
-                          <label className="form-label">Deployment Specifics &amp; Special Requests</label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="form-label mb-0">Live Quote Message Preview (Editable)</label>
+                            {isNotesEdited && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsNotesEdited(false);
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    notes: buildDraftMessage(prev, calc, estimatedCost)
+                                  }));
+                                }}
+                                className="text-[10px] text-[#d32f2f] hover:underline cursor-pointer font-sans font-semibold"
+                              >
+                                ↺ Reset to Calculator Draft
+                              </button>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-400 mb-2 font-sans">
+                            Pre-filled with your live quote details. You can review or edit any lines below before sending:
+                          </p>
                           <textarea
                             name="notes"
+                            rows={11}
                             value={formData.notes}
                             onChange={handleInputChange}
-                            placeholder="e.g. Gated society security at Green Valley, need 4 static guards for 12h shifts and 1 mobile supervisor..."
-                            className="form-textarea"
+                            className="form-textarea font-mono text-xs leading-relaxed"
                           />
                         </div>
 
-                        <button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="btn btn-primary w-full uppercase tracking-wider text-xs rounded-sm flex items-center justify-center gap-2 mt-2"
-                        >
-                          {isSubmitting ? (
-                            <span>Sending Quote Request...</span>
-                          ) : (
-                            <>
-                              <Send size={14} />
-                              <span>Request Contract Draft</span>
-                            </>
+                        {/* Dual Messaging & Submission Action Buttons */}
+                        <div className="flex flex-col gap-3 mt-3">
+                          {/* WhatsApp Instant Send */}
+                          <button
+                            type="button"
+                            onClick={handleWhatsAppDispatch}
+                            className="w-full py-3 px-4 rounded-sm bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(37,211,102,0.3)] hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] transition-all cursor-pointer"
+                          >
+                            <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                            </svg>
+                            <span>{isMobile ? 'Send Quote via WhatsApp' : 'Dispatch Quote on WhatsApp Web'}</span>
+                          </button>
+
+                          {/* GSM SMS Dispatch (Available for Mobile Devices) */}
+                          {isMobile && (
+                            <button
+                              type="button"
+                              onClick={handleGsmSmsDispatch}
+                              className="w-full py-3 px-4 rounded-sm bg-[#1e293b] hover:bg-[#334155] border border-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                            >
+                              <Smartphone size={15} className="text-[#d32f2f]" />
+                              <span>Send via GSM SMS (Cellular SIM)</span>
+                            </button>
                           )}
-                        </button>
+
+                          {/* Standard Direct Web Submission */}
+                          <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="btn btn-secondary w-full uppercase tracking-wider text-xs rounded-sm flex items-center justify-center gap-2 py-2.5"
+                          >
+                            {isSubmitting ? (
+                              <span>Logging Inquiry...</span>
+                            ) : (
+                              <>
+                                <Send size={13} />
+                                <span>Submit Direct Web Inquiry</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
                       </form>
                     )}
                   </div>

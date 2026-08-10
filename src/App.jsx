@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Careers from './pages/Careers';
@@ -11,45 +13,33 @@ import Leadership from './pages/Leadership';
 import Credentials from './pages/Credentials';
 
 function App() {
-  const [activePage, setActivePage] = useState('home');
-  const [openQuoteForm, setOpenQuoteForm] = useState(false);
-
-  const renderActivePage = () => {
-    switch (activePage) {
-      case 'home':
-        return <Home setActivePage={setActivePage} />;
-      case 'services':
-        return <Services setActivePage={setActivePage} />;
-      case 'ceo-message':
-        return <CeoMessage />;
-      case 'leadership':
-        return <Leadership />;
-      case 'credentials':
-        return <Credentials />;
-      case 'careers':
-        return <Careers />;
-      case 'contact':
-        return <Contact openQuoteForm={openQuoteForm} setOpenQuoteForm={setOpenQuoteForm} />;
-      default:
-        return <Home setActivePage={setActivePage} />;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#0a0b0e] text-white flex flex-col selection:bg-[#d32f2f] selection:text-white">
-      {/* Navigation Header */}
-      <Header activePage={activePage} setActivePage={setActivePage} setOpenQuoteForm={setOpenQuoteForm} />
+      {/* Auto scroll to top on route changes */}
+      <ScrollToTop />
 
-      {/* Main Page Area — refined responsive header clearance */}
+      {/* Navigation Header */}
+      <Header />
+
+      {/* Main Page Area with Route View */}
       <main className="flex-1 flex flex-col pt-[72px] sm:pt-[88px]">
-        {renderActivePage()}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/ceo-message" element={<CeoMessage />} />
+          <Route path="/leadership" element={<Leadership />} />
+          <Route path="/credentials" element={<Credentials />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
-      {/* Floating Simulated Chat Support Widget */}
-      <ChatWidget setActivePage={setActivePage} />
+      {/* Floating Chat Support Widget */}
+      <ChatWidget />
 
       {/* Footer */}
-      <Footer setActivePage={setActivePage} />
+      <Footer />
     </div>
   );
 }

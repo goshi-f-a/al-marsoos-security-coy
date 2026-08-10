@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, Award, MapPin, Phone } from 'lucide-react';
-import heroGuard from '../assets/hero_guard.jpg';
+import { Link } from 'react-router-dom';
+import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
 import heroGuardSolo from '../assets/hero_guard_solo.png';
 
-const Home = ({ setActivePage }) => {
+const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const testimonials = [
@@ -79,18 +79,18 @@ const Home = ({ setActivePage }) => {
               At AMS (Pvt) Ltd, we provide reliable, armed, and highly disciplined security guards with command-level supervision to protect what matters most.
             </p>
             <div className="flex flex-wrap gap-4 mt-2">
-              <button 
-                onClick={() => setActivePage('contact')} 
+              <Link 
+                to="/contact" 
                 className="btn btn-primary text-sm uppercase tracking-wider rounded-sm flex items-center gap-2"
               >
                 Request Consultation
-              </button>
-              <button 
-                onClick={() => setActivePage('services')} 
+              </Link>
+              <Link 
+                to="/services" 
                 className="btn btn-secondary text-sm uppercase tracking-wider rounded-sm"
               >
                 Explore Services
-              </button>
+              </Link>
             </div>
 
             {/* Quick Stats Banner */}
@@ -111,8 +111,6 @@ const Home = ({ setActivePage }) => {
           </div>
         </div>
       </section>
-
-
 
       {/* Services Highlight Section */}
       <section className="bg-[#0a0b0e] section-padding">
@@ -135,9 +133,9 @@ const Home = ({ setActivePage }) => {
               <p className="text-xs text-slate-400 font-sans">
                 Highly trained armed and unarmed officers with military-level standards to provide perimeter security and access control.
               </p>
-              <button onClick={() => setActivePage('services')} className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
+              <Link to="/services" className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
                 Read More &rarr;
-              </button>
+              </Link>
             </div>
 
             {/* Service 2 */}
@@ -149,9 +147,9 @@ const Home = ({ setActivePage }) => {
               <p className="text-xs text-slate-400 font-sans">
                 24/7 technical surveillance centers to track movement, control alarms, and alert rapid response teams instantly.
               </p>
-              <button onClick={() => setActivePage('services')} className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
+              <Link to="/services" className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
                 Read More &rarr;
-              </button>
+              </Link>
             </div>
 
             {/* Service 3 */}
@@ -163,9 +161,9 @@ const Home = ({ setActivePage }) => {
               <p className="text-xs text-slate-400 font-sans">
                 Elite host guards for large wedding ceremonies, corporate dinners, and banquets. Ensures crowd management and VIP safety.
               </p>
-              <button onClick={() => setActivePage('services')} className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
+              <Link to="/services" className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
                 Read More &rarr;
-              </button>
+              </Link>
             </div>
 
             {/* Service 4 */}
@@ -177,9 +175,9 @@ const Home = ({ setActivePage }) => {
               <p className="text-xs text-slate-400 font-sans">
                 Comprehensive security gates, access logs, and patrols for housing societies (e.g. Green Valley) and corporate hubs.
               </p>
-              <button onClick={() => setActivePage('services')} className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
+              <Link to="/services" className="text-xs font-semibold text-[#d32f2f] hover:text-white mt-auto flex items-center gap-1">
                 Read More &rarr;
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -241,9 +239,9 @@ const Home = ({ setActivePage }) => {
             <a href="tel:03302051221" className="btn btn-primary text-xs uppercase tracking-wider rounded-sm flex items-center gap-2">
               <Phone size={14} /> Call: 0330 2051221
             </a>
-            <button onClick={() => setActivePage('contact')} className="btn btn-secondary text-xs uppercase tracking-wider rounded-sm">
+            <Link to="/contact?quote=true" className="btn btn-secondary text-xs uppercase tracking-wider rounded-sm">
               Calculate Cost
-            </button>
+            </Link>
           </div>
         </div>
       </section>

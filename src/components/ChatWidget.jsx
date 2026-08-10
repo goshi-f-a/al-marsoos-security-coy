@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, Send, ShieldCheck, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { MessageSquare, X, Send, ShieldCheck } from 'lucide-react';
 
-const ChatWidget = ({ setActivePage }) => {
+const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -69,13 +71,13 @@ const ChatWidget = ({ setActivePage }) => {
     if (actionType === 'quote') {
       handleSendMessage('I need a security quote.');
       setTimeout(() => {
-        setActivePage('contact');
+        navigate('/contact?quote=true');
         setIsOpen(false);
       }, 2500);
     } else if (actionType === 'careers') {
       handleSendMessage('How can I apply for a security guard job?');
       setTimeout(() => {
-        setActivePage('careers');
+        navigate('/careers');
         setIsOpen(false);
       }, 2500);
     } else if (actionType === 'marketing') {
