@@ -120,12 +120,12 @@ const Credentials = () => {
       {/* Main Tabbed Grid */}
       <section className="section-padding bg-[#0a0b0e]">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
             {/* Sidebar Sub-Menu Tabs (lg:col-span-4) */}
-            <div className="lg:col-span-4 flex flex-col gap-2 w-full">
-              <span className="text-slate-500 text-[10px] uppercase font-bold tracking-widest pl-3 mb-2">Available Credentials</span>
-              <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 scrollbar-thin">
+            <div className="lg:col-span-4 flex flex-col gap-1.5 w-full">
+              <span className="text-slate-500 text-[10px] uppercase font-bold tracking-widest pl-2 mb-1">Available Credentials</span>
+              <div className="flex flex-col gap-1.5 w-full">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
@@ -133,13 +133,13 @@ const Credentials = () => {
                     <button
                       key={tab.id}
                       onClick={() => { setActiveTab(tab.id); setIsZoomed(false); }}
-                      className={`flex items-center gap-3 px-4 py-3.5 rounded-md text-left text-xs font-bold font-outfit tracking-wide uppercase transition-all duration-300 border whitespace-nowrap lg:whitespace-normal shrink-0 ${isActive
-                          ? 'bg-[#d32f2f]/10 border-[#d32f2f] text-white'
-                          : 'bg-[#11131c]/50 border-white/5 text-slate-400 hover:text-white hover:bg-white/5'
+                      className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-md text-left text-[11px] sm:text-xs font-semibold font-outfit tracking-wide uppercase transition-all duration-200 border w-full ${isActive
+                          ? 'bg-[#d32f2f]/10 border-[#d32f2f] text-white shadow-[0_0_12px_rgba(211,47,47,0.15)]'
+                          : 'bg-[#11131c]/60 border-white/5 text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/10'
                         }`}
                     >
-                      <Icon size={16} className={isActive ? 'text-[#d32f2f]' : 'text-slate-500'} />
-                      <span>{tab.label}</span>
+                      <Icon size={14} className={isActive ? 'text-[#d32f2f]' : 'text-slate-500'} />
+                      <span className="truncate">{tab.label}</span>
                     </button>
                   );
                 })}
