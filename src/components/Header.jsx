@@ -94,19 +94,21 @@ const Header = ({ activePage, setActivePage, setOpenQuoteForm }) => {
                       <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full" />
                     )}
                   </button>
-                  {/* Dropdown Menu */}
-                  <div className="absolute top-full left-0 mt-1 w-64 bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2 hidden group-hover:block animate-fade-in z-50">
-                    {link.subLinks.map((sub) => (
-                      <button
-                        key={sub.id}
-                        onClick={() => handleNavClick(sub.id)}
-                        className={`dropdown-item w-full text-left px-4 py-3 text-xs font-medium font-outfit transition-all duration-200 block ${
-                          activePage === sub.id ? 'active text-white' : 'text-slate-400'
-                        }`}
-                      >
-                        {sub.label}
-                      </button>
-                    ))}
+                  {/* Dropdown Menu Wrapper (Continuous hover target without gap) */}
+                  <div className="absolute top-full left-0 pt-1.5 w-64 hidden group-hover:block animate-fade-in z-50">
+                    <div className="bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2">
+                      {link.subLinks.map((sub) => (
+                        <button
+                          key={sub.id}
+                          onClick={() => handleNavClick(sub.id)}
+                          className={`dropdown-item w-full text-left px-4 py-3 text-xs font-medium font-outfit transition-all duration-200 block ${
+                            activePage === sub.id ? 'active text-white' : 'text-slate-400'
+                          }`}
+                        >
+                          {sub.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               );
