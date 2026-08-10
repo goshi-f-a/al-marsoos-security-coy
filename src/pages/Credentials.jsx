@@ -112,7 +112,25 @@ const Credentials = () => {
   ];
 
   const toggleTab = (id) => {
-    setExpandedTab((prev) => (prev === id ? null : id));
+    setExpandedTab((prev) => {
+      const next = prev === id ? null : id;
+      if (next) {
+        // Smoothly glide viewport to the opened panel so user sees it clearly
+        setTimeout(() => {
+          const el = document.getElementById(`panel-${id}`);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            const offset = 90; // Header height + breathing room
+            const targetY = window.scrollY + rect.top - offset;
+            window.scrollTo({
+              top: targetY,
+              behavior: 'smooth'
+            });
+          }
+        }, 120);
+      }
+      return next;
+    });
   };
 
   return (
@@ -150,6 +168,7 @@ const Credentials = () => {
 
               return (
                 <div
+                  id={`panel-${doc.id}`}
                   key={doc.id}
                   className={`glass-card border rounded-lg overflow-hidden transition-all duration-300 ${
                     isExpanded
@@ -203,105 +222,111 @@ const Credentials = () => {
                     </div>
                   </button>
 
-                  {/* Expanded Content Panel */}
-                  {isExpanded && (
-                    <div className="px-4 sm:px-6 pb-6 pt-2 border-t border-white/5 animate-fade-in flex flex-col gap-6">
-                      
-                      {/* Document Sub-Header */}
-                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-white/5 pb-4">
-                        <div>
-                          <h3 className="text-base sm:text-lg font-extrabold text-white font-outfit uppercase tracking-wide">
-                            {doc.title}
-                          </h3>
-                          <p className="text-[11px] text-[#d32f2f] font-semibold font-outfit mt-0.5">
-                            {doc.subtitle}
-                          </p>
-                        </div>
-                        <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 bg-white/5 px-2.5 py-1 rounded-sm border border-white/5 w-fit">
-                          {doc.date}
-                        </span>
-                      </div>
-
-                      {/* Main Split Grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                  {/* Smooth Accordion Slide Container */}
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-4 sm:px-6 pb-6 pt-2 border-t border-white/5 flex flex-col gap-6">
                         
-                        {/* Description & Metadata */}
-                        <div className={doc.image ? 'md:col-span-7 flex flex-col gap-4' : 'md:col-span-12 flex flex-col gap-4'}>
-                          <p className="text-slate-300 text-xs font-sans leading-relaxed text-justify">
-                            {doc.description}
-                          </p>
-
-                          <div className="flex flex-col gap-2.5 bg-[#0a0b0e]/70 border border-white/5 rounded-md p-4">
-                            <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest mb-0.5 block">
-                              Certificate Metadata & Registry
-                            </span>
-                            {doc.details.map((det, idx) => (
-                              <div
-                                key={idx}
-                                className="flex flex-col gap-0.5 border-b border-white/5 pb-2 last:border-b-0 last:pb-0"
-                              >
-                                <span className="text-slate-500 text-[10px] font-sans">{det.label}</span>
-                                <span className="text-white text-xs font-semibold font-sans">{det.val}</span>
-                              </div>
-                            ))}
+                        {/* Document Sub-Header */}
+                        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-white/5 pb-4">
+                          <div>
+                            <h3 className="text-base sm:text-lg font-extrabold text-white font-outfit uppercase tracking-wide">
+                              {doc.title}
+                            </h3>
+                            <p className="text-[11px] text-[#d32f2f] font-semibold font-outfit mt-0.5">
+                              {doc.subtitle}
+                            </p>
                           </div>
+                          <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 bg-white/5 px-2.5 py-1 rounded-sm border border-white/5 w-fit">
+                            {doc.date}
+                          </span>
                         </div>
 
-                        {/* Certificate Image Preview */}
-                        {doc.image && (
-                          <div className="md:col-span-5 flex flex-col gap-2">
-                            <div className="relative group rounded-md overflow-hidden bg-slate-900 border border-white/10 aspect-[3/4] flex items-center justify-center shadow-lg">
-                              <img
-                                src={doc.image}
-                                alt={doc.title}
-                                className="w-full h-full object-cover"
-                              />
-                              {/* Hover / Tap Overlay controls */}
-                              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-                                <button
-                                  type="button"
-                                  onClick={() => setZoomedImage({ src: doc.image, title: doc.title, id: doc.id })}
-                                  className="p-2.5 bg-[#d32f2f] text-white rounded-full hover:bg-[#b71c1c] transition-all hover:scale-105"
-                                  title="Zoom Document"
-                                >
-                                  <Eye size={16} />
-                                </button>
-                                <a
-                                  href={doc.image}
-                                  download={`${doc.id}_license.png`}
-                                  className="p-2.5 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all hover:scale-105 border border-white/10"
-                                  title="Download Document"
-                                >
-                                  <Download size={16} />
-                                </a>
-                              </div>
-                            </div>
-                            <span className="text-[10px] text-slate-500 font-sans text-center">
-                              Hover to Zoom or Download
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Verified Government Badge for Text-Only Docs */}
-                        {!doc.image && (
-                          <div className="md:col-span-12 border border-dashed border-white/10 rounded-lg p-6 flex flex-col items-center justify-center text-center bg-[#0a0b0e]/50 relative overflow-hidden">
-                            <ShieldCheck className="text-[#d32f2f] opacity-40 mb-2" size={36} />
-                            <h4 className="text-white font-bold text-xs font-outfit uppercase tracking-wider mb-1">
-                              Verified Government Registration
-                            </h4>
-                            <p className="text-[11px] text-slate-400 font-sans max-w-md leading-relaxed mb-3">
-                              This credential is confirmed and audited by federal/provincial regulators. Physical sealed original is cataloged at our Islamabad Corporate Headquarters.
+                        {/* Main Split Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                          
+                          {/* Description & Metadata */}
+                          <div className={doc.image ? 'md:col-span-7 flex flex-col gap-4' : 'md:col-span-12 flex flex-col gap-4'}>
+                            <p className="text-slate-300 text-xs font-sans leading-relaxed text-justify">
+                              {doc.description}
                             </p>
-                            <span className="text-[9px] uppercase font-bold tracking-wider text-[#d32f2f] bg-[#d32f2f]/10 border border-[#d32f2f]/30 px-3 py-1 rounded-sm">
-                              Registry: {doc.cui}
-                            </span>
+
+                            <div className="flex flex-col gap-2.5 bg-[#0a0b0e]/70 border border-white/5 rounded-md p-4">
+                              <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest mb-0.5 block">
+                                Certificate Metadata & Registry
+                              </span>
+                              {doc.details.map((det, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex flex-col gap-0.5 border-b border-white/5 pb-2 last:border-b-0 last:pb-0"
+                                >
+                                  <span className="text-slate-500 text-[10px] font-sans">{det.label}</span>
+                                  <span className="text-white text-xs font-semibold font-sans">{det.val}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        )}
+
+                          {/* Certificate Image Preview */}
+                          {doc.image && (
+                            <div className="md:col-span-5 flex flex-col gap-2">
+                              <div className="relative group rounded-md overflow-hidden bg-slate-900 border border-white/10 aspect-[3/4] flex items-center justify-center shadow-lg">
+                                <img
+                                  src={doc.image}
+                                  alt={doc.title}
+                                  className="w-full h-full object-cover"
+                                />
+                                {/* Hover / Tap Overlay controls */}
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                                  <button
+                                    type="button"
+                                    onClick={() => setZoomedImage({ src: doc.image, title: doc.title, id: doc.id })}
+                                    className="p-2.5 bg-[#d32f2f] text-white rounded-full hover:bg-[#b71c1c] transition-all hover:scale-105"
+                                    title="Zoom Document"
+                                  >
+                                    <Eye size={16} />
+                                  </button>
+                                  <a
+                                    href={doc.image}
+                                    download={`${doc.id}_license.png`}
+                                    className="p-2.5 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all hover:scale-105 border border-white/10"
+                                    title="Download Document"
+                                  >
+                                    <Download size={16} />
+                                  </a>
+                                </div>
+                              </div>
+                              <span className="text-[10px] text-slate-500 font-sans text-center">
+                                Hover to Zoom or Download
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Verified Government Badge for Text-Only Docs */}
+                          {!doc.image && (
+                            <div className="md:col-span-12 border border-dashed border-white/10 rounded-lg p-6 flex flex-col items-center justify-center text-center bg-[#0a0b0e]/50 relative overflow-hidden">
+                              <ShieldCheck className="text-[#d32f2f] opacity-40 mb-2" size={36} />
+                              <h4 className="text-white font-bold text-xs font-outfit uppercase tracking-wider mb-1">
+                                Verified Government Registration
+                              </h4>
+                              <p className="text-[11px] text-slate-400 font-sans max-w-md leading-relaxed mb-3">
+                                This credential is confirmed and audited by federal/provincial regulators. Physical sealed original is cataloged at our Islamabad Corporate Headquarters.
+                              </p>
+                              <span className="text-[9px] uppercase font-bold tracking-wider text-[#d32f2f] bg-[#d32f2f]/10 border border-[#d32f2f]/30 px-3 py-1 rounded-sm">
+                                Registry: {doc.cui}
+                              </span>
+                            </div>
+                          )}
+
+                        </div>
 
                       </div>
-
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
