@@ -45,7 +45,7 @@ const ChatWidget = () => {
       } else if (query.includes('job') || query.includes('career') || query.includes('apply') || query.includes('work') || query.includes('guard')) {
         responseText = 'We are always looking for dedicated security professionals! Please navigate to our Careers tab to apply online, or send your application to almarsoos.sec@gmail.com.';
       } else if (query.includes('safdar') || query.includes('malik') || query.includes('marketing') || query.includes('manager')) {
-        responseText = 'You can reach Mr. Safdar Malik (General Manager Marketing) directly on WhatsApp at 0330 2051221 or write to almarsoos.sec@gmail.com.';
+        responseText = 'You can reach Mr. Safdar Malik (General Manager Marketing) directly on WhatsApp at 0330 2051221.';
       } else if (query.includes('location') || query.includes('address') || query.includes('office') || query.includes('islamabad')) {
         responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. You can view our location on Google Maps: https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9 or visit during business hours (9 AM - 5 PM).';
       } else {
