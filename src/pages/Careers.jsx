@@ -4,7 +4,7 @@ import { UserCheck, BookOpen, Scale, Check, Shield, Mail, MessageCircle } from '
 import { getWhatsAppUrl } from '../utils/device';
 
 const Careers = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -26,8 +26,9 @@ const Careers = () => {
           formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 150);
+      setSearchParams({}, { replace: true });
     }
-  }, [searchParams]);
+  }, [searchParams, setSearchParams]);
 
   const activeJobs = [
     {
@@ -239,7 +240,7 @@ Sent from Al-Marsoos Recruitment Portal`;
             </div>
 
             {/* Application Submission Form */}
-            <div className="lg:col-span-6" id="recruitment-form-container">
+            <div className="lg:col-span-6 scroll-mt-24" id="recruitment-form-container">
               {isFormOpen ? (
                 <div className="glass-card p-8 sm:p-10 border border-white/5 relative animate-fade-in">
                   <button

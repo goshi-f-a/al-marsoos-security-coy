@@ -40,10 +40,11 @@ const ChatWidget = () => {
           <Link
             key={match.index}
             to={linkUrl}
-            className="text-[#d32f2f] hover:underline font-bold inline-flex items-center gap-0.5 mx-0.5 group"
+            onClick={() => setIsOpen(false)}
+            className="underline underline-offset-4 decoration-2 decoration-[#d32f2f] text-white hover:text-[#ff6b6b] font-bold inline-flex items-center gap-1 bg-[#d32f2f]/20 hover:bg-[#d32f2f]/35 px-2 py-0.5 rounded transition-all cursor-pointer mx-1 my-0.5 shadow-sm border border-[#d32f2f]/30"
           >
             <span>{linkText}</span>
-            <span className="text-[10px] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+            <span className="text-[11px] text-[#d32f2f] font-extrabold">&rarr;</span>
           </Link>
         );
       } else {
@@ -53,10 +54,11 @@ const ChatWidget = () => {
             href={linkUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#d32f2f] hover:underline font-bold inline-flex items-center gap-0.5 mx-0.5 group"
+            onClick={() => setIsOpen(false)}
+            className="underline underline-offset-4 decoration-2 decoration-[#d32f2f] text-white hover:text-[#ff6b6b] font-bold inline-flex items-center gap-1 bg-[#d32f2f]/20 hover:bg-[#d32f2f]/35 px-2 py-0.5 rounded transition-all cursor-pointer mx-1 my-0.5 shadow-sm border border-[#d32f2f]/30"
           >
             <span>{linkText}</span>
-            <span className="text-[10px] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+            <span className="text-[11px] text-[#d32f2f] font-extrabold">&rarr;</span>
           </a>
         );
       }
@@ -90,7 +92,7 @@ const ChatWidget = () => {
       const query = textToSend.toLowerCase();
 
       if (query.includes('quote') || query.includes('price') || query.includes('cost') || query.includes('estimator')) {
-        responseText = 'We would love to provide a customized quote! You can use our [Instant Security Estimator](/contact?quote=true) on the Contact Us page to calculate exact deployment rates and submit your inquiry directly.';
+        responseText = 'We would love to provide a customized quote! You can use our [Instant Security Estimator](/contact?calculator=true) on the Contact Us page to calculate exact deployment rates and submit your inquiry directly.';
       } else if (query.includes('job') || query.includes('career') || query.includes('apply') || query.includes('work') || query.includes('guard')) {
         responseText = 'We are always looking for dedicated security professionals! Please open our [Online Recruitment & Vetting Form](/careers?apply=true) to apply directly for security guard and supervisory positions.';
       } else if (query.includes('safdar') || query.includes('malik') || query.includes('marketing') || query.includes('manager')) {
@@ -98,7 +100,7 @@ const ChatWidget = () => {
       } else if (query.includes('location') || query.includes('address') || query.includes('office') || query.includes('islamabad')) {
         responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. You can [View on Google Maps](https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9) or visit during business hours (9 AM - 5 PM).';
       } else {
-        responseText = 'Thank you for your message. Your safety is our mission. You can calculate custom pricing using our [Instant Security Estimator](/contact?quote=true) or message us on WhatsApp at 0310 6460024.';
+        responseText = 'Thank you for your message. Your safety is our mission. You can calculate custom pricing using our [Instant Security Estimator](/contact?calculator=true) or message us on WhatsApp at 0310 6460024.';
       }
 
       setMessages((prev) => [

@@ -179,15 +179,21 @@ Sent from Al-Marsoos Official Website`;
     });
   }, []);
 
-  // Auto-open form and scroll to it when triggered from "Get a Quote" button (?quote=true)
+  // Auto-scroll when triggered from "Instant Security Estimator" (?calculator=true) or "Get a Quote" (?quote=true)
   useEffect(() => {
-    if (searchParams.get('quote') === 'true') {
-      setIsFormOpen(true);
+    if (searchParams.get('calculator') === 'true') {
+      setTimeout(() => {
+        const el = document.getElementById('calculator-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
       setSearchParams({}, { replace: true });
+    } else if (searchParams.get('quote') === 'true') {
+      setIsFormOpen(true);
       setTimeout(() => {
         const el = document.getElementById('quote-form-panel');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 150);
+      setSearchParams({}, { replace: true });
     }
   }, [searchParams, setSearchParams]);
 
@@ -440,7 +446,7 @@ Sent from Al-Marsoos Official Website`;
             <div className="md:col-span-7 flex flex-col gap-6 w-full">
               
               {/* Quote Calculator Card */}
-              <div className="glass-card p-8 border border-white/5 flex flex-col gap-6">
+              <div id="calculator-section" className="glass-card p-8 border border-white/5 flex flex-col gap-6 scroll-mt-24">
                 <div className="flex items-center gap-3">
                   <Calculator size={22} className="text-[#d32f2f]" />
                   <h3 className="text-xl font-bold text-white font-outfit uppercase tracking-wider">
