@@ -41,7 +41,7 @@ const ChatWidget = () => {
       const query = textToSend.toLowerCase();
 
       if (query.includes('quote') || query.includes('price') || query.includes('cost')) {
-        responseText = 'We would love to provide a customized quote! You can fill out our interactive Quote Calculator on the Contact Us page, or message our team directly on WhatsApp at 0310 6460024.';
+        responseText = 'We would love to provide a customized quote! You can fill out our interactive Quote Calculator on the Contact Us page, message our team directly on WhatsApp at 0310 6460024, or email almarsoos.sec@gmail.com.';
       } else if (query.includes('job') || query.includes('career') || query.includes('apply') || query.includes('work') || query.includes('guard')) {
         responseText = 'We are always looking for dedicated security professionals! Please navigate to our Careers tab to apply online, or send your application to almarsoos.sec@gmail.com.';
       } else if (query.includes('safdar') || query.includes('malik') || query.includes('marketing') || query.includes('manager')) {
