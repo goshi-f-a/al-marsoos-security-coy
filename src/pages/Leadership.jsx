@@ -62,7 +62,7 @@ const Leadership = () => {
         <img 
           src={leader.image} 
           alt={leader.name} 
-          className="w-full h-full object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-300"
+          className="w-full h-full object-cover object-top grayscale-interactive"
           style={isSafdar ? { transform: 'scale(1.42)', transformOrigin: '50% 24%' } : {}}
         />
       );

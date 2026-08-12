@@ -55,7 +55,7 @@ const Header = () => {
   const handleGetQuoteClick = () => {
     setIsMobileMenuOpen(false);
     setIsMobileAboutOpen(false);
-    navigate('/contact?quote=true');
+    navigate('/contact?calculator=true');
   };
 
   return (

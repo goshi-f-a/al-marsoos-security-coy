@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Eye, Bell, CheckCircle2, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../utils/device';
-import heroGuardSolo from '../assets/hero_guard_solo.png';
+import heroGuardFacade from '../assets/hero_guard_facade_pcap.png';
 
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -37,14 +37,14 @@ const Home = () => {
     <div className="flex flex-col w-full font-outfit">
       {/* Hero Section */}
       <section className="relative min-h-[calc(100vh-72px)] sm:min-h-[calc(100vh-88px)] flex items-start md:items-center justify-center bg-[#07080a] overflow-hidden">
-        {/* ── BACKGROUND: new guard image darkened — building shows as moody backdrop ── */}
+        {/* ── BACKGROUND: Head office & guard image backdrop ── */}
         <div className="absolute inset-0 z-0">
           <img
-            src={heroGuardSolo}
+            src={heroGuardFacade}
             alt=""
             aria-hidden="true"
             className="w-full h-full object-cover animate-fade-in"
-            style={{ objectPosition: 'center 20%', opacity: 0.18, filter: 'blur(2px) brightness(0.6)' }}
+            style={{ objectPosition: 'center 20%', opacity: 0.20, filter: 'blur(3px) brightness(0.6)' }}
           />
           {/* Full dark overlay so text area is always readable */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0b0e] via-[#0a0b0e]/95 to-[#0a0b0e]/70" />
@@ -53,12 +53,12 @@ const Home = () => {
 
         {/* ── FOREGROUND GUARD: tall positioned image on right, fused with gradient mask ── */}
         <img
-          src={heroGuardSolo}
-          alt="AMS Security Officer"
-          className="hero-guard absolute bottom-0 right-[3%] h-[90%] w-auto object-contain z-20 animate-fade-in select-none pointer-events-none"
+          src={heroGuardFacade}
+          alt="Al-Marsoos Security Head Office and Armed Security Officer"
+          className="hero-guard absolute bottom-0 right-[2%] h-[92%] w-auto object-contain z-20 animate-fade-in select-none pointer-events-none rounded-lg"
           style={{
-            maskImage: 'linear-gradient(to right, transparent 0%, black 22%), linear-gradient(to top, transparent 0%, black 12%)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 22%), linear-gradient(to top, transparent 0%, black 12%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 20%), linear-gradient(to top, transparent 0%, black 10%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%), linear-gradient(to top, transparent 0%, black 10%)',
             maskComposite: 'intersect',
             WebkitMaskComposite: 'source-in',
             filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.9))'
@@ -240,7 +240,7 @@ const Home = () => {
           {/* Action Buttons: Pure Messaging & Quote Calculator */}
           <div className="flex flex-wrap items-center justify-center gap-4 mt-2 w-full max-w-md">
             <Link
-              to="/contact?quote=true"
+              to="/contact?calculator=true"
               className="btn btn-primary text-xs uppercase tracking-wider rounded-sm px-6 py-3.5 shadow-lg hover:scale-105 transition-transform duration-200 flex-1 flex items-center justify-center gap-2"
             >
               <Shield size={15} />

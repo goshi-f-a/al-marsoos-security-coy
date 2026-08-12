@@ -182,9 +182,10 @@ Sent from Al-Marsoos Official Website`;
   // Auto-scroll when triggered from "Instant Security Estimator" (?calculator=true) or "Get a Quote" (?quote=true)
   useEffect(() => {
     if (searchParams.get('calculator') === 'true') {
+      setIsFormOpen(false);
       setTimeout(() => {
         const el = document.getElementById('calculator-section');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 150);
       setSearchParams({}, { replace: true });
     } else if (searchParams.get('quote') === 'true') {

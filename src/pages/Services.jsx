@@ -169,7 +169,7 @@ const Services = () => {
                 </a>
                 {/* Request Custom Quote Link */}
                 <Link
-                  to="/contact?quote=true"
+                  to="/contact?calculator=true"
                   className="flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all group"
                 >
                   <Shield size={14} className="text-[#d32f2f] group-hover:text-white transition-colors" />
@@ -180,15 +180,15 @@ const Services = () => {
 
             {/* Main Tabs Details Panel */}
             <div className="lg:col-span-8 flex flex-col gap-8 animate-fade-in">
-              <div className="glass-card overflow-hidden">
+              <div className="glass-card overflow-hidden group">
                 <div className="h-[300px] w-full relative overflow-hidden">
                   <img
                     src={currentData.image}
                     alt={currentData.title}
-                    className="w-full h-full object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover object-top grayscale-interactive"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#11131c] to-transparent" />
-                  <span className="absolute bottom-6 left-6 badge bg-[#d32f2f] border-transparent text-white uppercase tracking-wider font-bold">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#11131c] via-transparent to-transparent pointer-events-none" />
+                  <span className="absolute bottom-6 left-6 badge bg-[#d32f2f] border-transparent text-white uppercase tracking-wider font-bold pointer-events-none">
                     {currentData.label}
                   </span>
                 </div>
@@ -225,7 +225,7 @@ const Services = () => {
 
                   <div className="flex justify-end border-t border-white/5 pt-6 mt-2">
                     <Link
-                      to="/contact?quote=true"
+                      to="/contact?calculator=true"
                       className="btn btn-primary px-8 text-xs uppercase tracking-wider rounded-sm flex items-center gap-2"
                     >
                       <Shield size={14} />
