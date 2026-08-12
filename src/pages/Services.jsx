@@ -156,13 +156,22 @@ const Services = () => {
                 <p className="text-xs text-slate-400 leading-relaxed font-sans">
                   Speak to Safdar Malik (GM Marketing) for corporate rates, deployment schedules, and security consultations in Islamabad.
                 </p>
+                {/* Mobile Only (< 640px): Direct Call Button */}
                 <a
                   href="tel:03106460024"
-                  className="flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all mt-2"
+                  className="sm:hidden flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all mt-2"
                 >
                   <PhoneCall size={14} />
                   <span>Call: 0310 6460024</span>
                 </a>
+                {/* Wide Screen (>= 640px): Request Custom Quote Button */}
+                <Link
+                  to="/contact?quote=true"
+                  className="hidden sm:flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all mt-2 group"
+                >
+                  <Shield size={14} className="text-[#d32f2f] group-hover:text-white transition-colors" />
+                  <span>Request Custom Quote</span>
+                </Link>
               </div>
             </div>
 

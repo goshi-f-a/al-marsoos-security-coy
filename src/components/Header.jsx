@@ -155,13 +155,10 @@ const Header = () => {
 
         {/* Action Button & Contact info */}
         <div className="hidden lg:flex items-center gap-6">
-          <a
-            href="tel:03106460024"
-            className="flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
-          >
-            <Phone size={14} className="text-[#d32f2f] animate-pulse" />
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-300 select-all">
+            <Phone size={14} className="text-[#d32f2f]" />
             <span>0310 6460024</span>
-          </a>
+          </div>
           <button
             onClick={handleGetQuoteClick}
             className="btn btn-primary px-5 py-2 text-xs uppercase tracking-wider rounded-sm flex items-center gap-1.5"

@@ -577,9 +577,10 @@ Sent from Al-Marsoos Official Website`;
                             <Mail size={14} className="text-[#d32f2f]" />
                             <span>Send Email</span>
                           </button>
+                          {/* Mobile Only (< 640px): Direct Call Button */}
                           <a
                             href="tel:03106460024"
-                            className="flex-1 py-2.5 px-3 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all"
+                            className="sm:hidden flex-1 py-2.5 px-3 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all"
                           >
                             <Phone size={14} className="text-[#d32f2f]" />
                             <span>Direct Hotline</span>
