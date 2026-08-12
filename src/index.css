@@ -113,12 +113,14 @@ button, input, textarea, select {
 .text-gradient {
   background: linear-gradient(135deg, #ffffff 30%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-red {
   background: linear-gradient(135deg, #ffffff 40%, var(--accent-red) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
