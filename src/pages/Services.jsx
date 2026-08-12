@@ -31,7 +31,7 @@ const Services = () => {
           desc: 'Elite bodyguards with military backgrounds providing physical close-protection and secure transit services in Islamabad.'
         }
       ],
-      ctaText: 'Apply for Hiring'
+      ctaText: 'Hire Guards'
     },
     {
       id: 'surveillance',
