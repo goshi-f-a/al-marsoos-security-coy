@@ -156,11 +156,11 @@ const Header = () => {
         {/* Action Button & Contact info */}
         <div className="hidden lg:flex items-center gap-6">
           <a
-            href="tel:03302051221"
+            href="tel:03106460024"
             className="flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
           >
             <Phone size={14} className="text-[#d32f2f] animate-pulse" />
-            <span>0330 2051221</span>
+            <span>0310 6460024</span>
           </a>
           <button
             onClick={handleGetQuoteClick}
@@ -242,11 +242,11 @@ const Header = () => {
 
           <div className="mt-8 flex flex-col gap-4 pb-12">
             <a
-              href="tel:03302051221"
+              href="tel:03106460024"
               className="flex items-center justify-center gap-2 p-3 bg-white/5 border border-white/10 rounded-sm text-sm font-semibold hover:bg-white/10 transition-colors"
             >
               <Phone size={16} className="text-[#d32f2f]" />
-              <span>Call: 0330 2051221</span>
+              <span>Call: 0310 6460024</span>
             </a>
             <button
               onClick={handleGetQuoteClick}

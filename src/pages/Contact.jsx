@@ -9,7 +9,7 @@ const branches = [
     city: 'Islamabad (HQ)',
     name: 'Islamabad Headquarters',
     address: 'Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad, Pakistan.',
-    phone: '0330 2051221 / 0302 5772842',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9',
     x: 315,
     y: 120
@@ -19,7 +19,7 @@ const branches = [
     city: 'Rawalpindi',
     name: 'Rawalpindi Regional Office',
     address: 'Office No. 19, Services Plaza, Mall Road, Saddar, Rawalpindi, Pakistan.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=Services+Plaza+Mall+Road+Saddar+Rawalpindi',
     x: 310,
     y: 135
@@ -29,7 +29,7 @@ const branches = [
     city: 'Faisalabad',
     name: 'Faisalabad Regional Office',
     address: 'Office No. 5, First Floor, Madina Market, Sugar Morre, Sheikhupura Road, Faisalabad, Pakistan.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=Madina+Market+Sugar+Morre+Sheikhupura+Road+Faisalabad',
     x: 290,
     y: 190
@@ -39,7 +39,7 @@ const branches = [
     city: 'Muzaffarabad',
     name: 'Muzaffarabad Branch (AJK)',
     address: 'Office No. 7, Near WAPDA Town, Dhana, Muzaffarabad, Azad Kashmir.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=WAPDA+Town+Dhana+Muzaffarabad',
     x: 335,
     y: 105
@@ -49,7 +49,7 @@ const branches = [
     city: 'Haripur',
     name: 'Haripur Branch (KPK)',
     address: 'Office No. 8, Second Floor, Doctor Plaza, Circular Road, Haripur, Khyber Pakhtunkhwa.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=Doctor+Plaza+Circular+Road+Haripur',
     x: 305,
     y: 90
@@ -59,7 +59,7 @@ const branches = [
     city: 'Gujranwala',
     name: 'Gujranwala Regional Office',
     address: 'Office No. 397-A, Model Town, Gujranwala, Punjab, Pakistan.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=Model+Town+Gujranwala+Punjab',
     x: 330,
     y: 160
@@ -69,7 +69,7 @@ const branches = [
     city: 'Quetta',
     name: 'Quetta Branch (Balochistan)',
     address: 'Chaman Plaza, Zarghun Road, Quetta, Balochistan, Pakistan.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=Chaman+Plaza+Zarghun+Road+Quetta',
     x: 180,
     y: 250
@@ -79,7 +79,7 @@ const branches = [
     city: 'Gilgit',
     name: 'Gilgit Branch (Gilgit-Baltistan)',
     address: 'NLI Plaza, Gilgit, Gilgit-Baltistan, Pakistan.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=NLI+Plaza+Gilgit+Pakistan',
     x: 360,
     y: 55
@@ -89,7 +89,7 @@ const branches = [
     city: 'Karachi',
     name: 'Karachi Regional Office',
     address: 'Flat AB-04, 2nd Floor, DHA Phase 2, Karachi, Sindh, Pakistan.',
-    phone: '0330 2051221',
+    phone: '0310 6460024',
     mapUrl: 'https://maps.google.com/?q=DHA+Phase+2+Karachi+Sindh',
     x: 200,
     y: 360
@@ -119,7 +119,6 @@ const Contact = () => {
     contractLength: '1m'
   });
   const [estimatedCost, setEstimatedCost] = useState(45000);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(branches[0]);
@@ -254,8 +253,25 @@ Sent from Al-Marsoos Official Website`;
     if (!validateForm()) return;
     const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
     setLastSubmittedMessage(msg);
-    const url = getWhatsAppUrl('923302051221', msg);
+    const url = getWhatsAppUrl('923106460024', msg);
     window.open(url, '_blank', 'noopener,noreferrer');
+    setIsSuccess(true);
+  };
+
+  const handleEmailDispatch = () => {
+    if (!validateForm()) return;
+    const serviceNames = {
+      static_armed: 'Static Armed Guard',
+      static_unarmed: 'Static Unarmed Guard',
+      patrol_vehicle: 'Mobile Patrol Vehicle',
+      event_guard: 'Event Host Guard'
+    };
+    const sLabel = serviceNames[calc.service] || calc.service;
+    const subject = `[AMS-QUOTE-INQUIRY] ${formData.name.trim()} - ${sLabel} Quote Request`;
+    const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
+    setLastSubmittedMessage(msg);
+    const mailtoUrl = `mailto:almarsoos.sec@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
+    window.location.href = mailtoUrl;
     setIsSuccess(true);
   };
 
@@ -263,7 +279,7 @@ Sent from Al-Marsoos Official Website`;
     if (!validateForm()) return;
     const msg = formData.notes.trim() || buildDraftMessage(formData, calc, estimatedCost);
     setLastSubmittedMessage(msg);
-    const url = getGsmSmsUrl('+923302051221', msg);
+    const url = getGsmSmsUrl('+923106460024', msg);
     window.location.href = url;
     setIsSuccess(true);
   };
@@ -333,8 +349,7 @@ Sent from Al-Marsoos Official Website`;
                     <div>
                       <h5 className="text-white font-bold font-outfit text-sm">Phone Hotlines</h5>
                       <p className="text-xs text-slate-400 font-sans mt-0.5">
-                        Landline / Mobile: 0330 2051221 <br />
-                        Alt Support Line: 0302 5772842
+                        Mobile / WhatsApp: <a href="tel:03106460024" className="text-white hover:text-[#d32f2f] font-medium">0310 6460024</a>
                       </p>
                     </div>
                   </div>
@@ -344,8 +359,7 @@ Sent from Al-Marsoos Official Website`;
                     <div>
                       <h5 className="text-white font-bold font-outfit text-sm">Email Support</h5>
                       <p className="text-xs text-slate-400 font-sans mt-0.5">
-                        Corporate queries: info@almarsoos.com <br />
-                        Marketing GM: marketing@almarsoos.com
+                        Official Inquiries: <a href="mailto:almarsoos.sec@gmail.com" className="text-white hover:text-[#d32f2f]">almarsoos.sec@gmail.com</a>
                       </p>
                     </div>
                   </div>
@@ -542,12 +556,12 @@ Sent from Al-Marsoos Official Website`;
                         </div>
                         <h4 className="text-white font-bold text-lg font-outfit uppercase">Inquiry Logged!</h4>
                         <p className="text-slate-300 text-xs font-sans max-w-sm">
-                          Your quote inquiry has been formatted. You can connect directly with Mr. Safdar Malik (General Manager Marketing) on WhatsApp or Phone:
+                          Your quote inquiry has been formatted. You can connect directly with our marketing team on WhatsApp, Email, or Phone:
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-2">
+                        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mt-2">
                           <a
-                            href={getWhatsAppUrl('923302051221', lastSubmittedMessage || 'Hello, I submitted a security quote inquiry.')}
+                            href={getWhatsAppUrl('923106460024', lastSubmittedMessage || 'Hello, I submitted a security quote inquiry.')}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-1 py-2.5 px-3 rounded-sm bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all"
@@ -555,8 +569,16 @@ Sent from Al-Marsoos Official Website`;
                             <MessageCircle size={14} />
                             <span>WhatsApp Chat</span>
                           </a>
+                          <button
+                            type="button"
+                            onClick={handleEmailDispatch}
+                            className="flex-1 py-2.5 px-3 rounded-sm bg-[#1e293b] hover:bg-[#334155] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all cursor-pointer"
+                          >
+                            <Mail size={14} className="text-[#d32f2f]" />
+                            <span>Send Email</span>
+                          </button>
                           <a
-                            href="tel:03302051221"
+                            href="tel:03106460024"
                             className="flex-1 py-2.5 px-3 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all"
                           >
                             <Phone size={14} className="text-[#d32f2f]" />
@@ -602,7 +624,7 @@ Sent from Al-Marsoos Official Website`;
                               name="phone"
                               value={formData.phone}
                               onChange={handleInputChange}
-                              placeholder="e.g. 03301234567"
+                              placeholder="e.g. 03106460024"
                               className="form-input"
                               required
                             />
@@ -664,6 +686,16 @@ Sent from Al-Marsoos Official Website`;
                               <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                             </svg>
                             <span>{isMobile ? 'Send Quote via WhatsApp' : 'Dispatch Quote on WhatsApp Web'}</span>
+                          </button>
+
+                          {/* Email Dispatch with [AMS-QUOTE-INQUIRY] Tag */}
+                          <button
+                            type="button"
+                            onClick={handleEmailDispatch}
+                            className="w-full py-3 px-4 rounded-sm bg-[#11131c] hover:bg-[#181c28] border border-white/10 hover:border-[#d32f2f]/50 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+                          >
+                            <Mail size={15} className="text-[#d32f2f]" />
+                            <span>Send via Email (almarsoos.sec@gmail.com)</span>
                           </button>
 
                           {/* GSM SMS Dispatch (Available for Mobile Devices) */}

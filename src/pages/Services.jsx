@@ -157,11 +157,11 @@ const Services = () => {
                   Speak to Safdar Malik (GM Marketing) for corporate rates, deployment schedules, and security consultations in Islamabad.
                 </p>
                 <a
-                  href="tel:03302051221"
+                  href="tel:03106460024"
                   className="flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all mt-2"
                 >
                   <PhoneCall size={14} />
-                  <span>Call: 0330 2051221</span>
+                  <span>Call: 0310 6460024</span>
                 </a>
               </div>
             </div>

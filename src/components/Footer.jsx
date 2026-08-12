@@ -126,13 +126,12 @@ const Footer = () => {
             <li className="flex items-center gap-3">
               <Phone size={16} className="text-[#d32f2f] shrink-0" />
               <div className="flex flex-col">
-                <a href="tel:03302051221" className="hover:text-white">0330 2051221</a>
-                <a href="tel:03025772842" className="hover:text-white">0302 5772842</a>
+                <a href="tel:03106460024" className="hover:text-white font-medium">0310 6460024</a>
               </div>
             </li>
             <li className="flex items-center gap-3">
               <Mail size={16} className="text-[#d32f2f] shrink-0" />
-              <a href="mailto:info@almarsoos.com" className="hover:text-white">info@almarsoos.com</a>
+              <a href="mailto:almarsoos.sec@gmail.com" className="hover:text-white">almarsoos.sec@gmail.com</a>
             </li>
           </ul>
         </div>

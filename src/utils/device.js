@@ -11,7 +11,7 @@ export const isMobileDevice = () => {
 
 /**
  * Generates WhatsApp URL (works seamlessly across Web and Mobile)
- * @param {string} phone - Clean international phone number without '+' (e.g. '923302051221')
+ * @param {string} phone - Clean international phone number without '+' (e.g. '923106460024')
  * @param {string} message - Pre-filled text message
  */
 export const getWhatsAppUrl = (phone, message) => {
@@ -27,7 +27,7 @@ export const getWhatsAppUrl = (phone, message) => {
 /**
  * Generates native GSM SMS URL for mobile messaging app
  * Handles both iOS (&body=) and Android (?body=) formats
- * @param {string} phone - Target phone number with country code (e.g. '+923302051221')
+ * @param {string} phone - Target phone number with country code (e.g. '+923106460024')
  * @param {string} message - Pre-filled SMS text
  */
 export const getGsmSmsUrl = (phone, message) => {
