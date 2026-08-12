@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserCheck, BookOpen, Scale, Check, Shield, Mail, MessageCircle, Phone } from 'lucide-react';
+import { UserCheck, BookOpen, Scale, Check, Shield, Mail, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../utils/device';
 
 const Careers = () => {
@@ -252,7 +252,7 @@ Sent from Al-Marsoos Recruitment Portal`;
                       Your recruitment application has been prepared. You can connect directly with our recruitment desk on Email or WhatsApp:
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mt-2">
+                    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-2">
                       <button
                         type="button"
                         onClick={handleEmailSubmit}
@@ -269,13 +269,6 @@ Sent from Al-Marsoos Recruitment Portal`;
                       >
                         <MessageCircle size={14} />
                         <span>WhatsApp Chat</span>
-                      </a>
-                      <a
-                        href="tel:03106460024"
-                        className="flex-1 py-2.5 px-3 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all"
-                      >
-                        <Phone size={14} className="text-[#d32f2f]" />
-                        <span>Call Hotline</span>
                       </a>
                     </div>
 
