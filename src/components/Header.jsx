@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
-import { Menu, X, Shield, Phone, ChevronDown } from 'lucide-react';
+import { Menu, X, Shield, MessageCircle, ChevronDown } from 'lucide-react';
+import { getWhatsAppUrl } from '../utils/device';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,9 +30,9 @@ const Header = () => {
       label: 'About Us',
       isDropdown: true,
       subLinks: [
-        { id: 'ceo-message', path: '/ceo-message', label: "CEO's Message" },
         { id: 'leadership', path: '/leadership', label: 'Our Leadership' },
-        { id: 'credentials', path: '/credentials', label: 'Licenses & Credentials' }
+        { id: 'ceo-message', path: '/ceo-message', label: "CEO's Message" },
+        { id: 'credentials', path: '/credentials', label: 'Licenses & Credentials' },
       ]
     },
     { id: 'services', path: '/services', label: 'Services' },
@@ -40,8 +41,8 @@ const Header = () => {
   ];
 
   const isLinkActive = (link) => {
-    if (link.path === '/') {
-      return location.pathname === '/' || location.pathname === '/home';
+    if (link.isDropdown) {
+      return link.subLinks.some(sub => location.pathname === sub.path);
     }
     return location.pathname === link.path;
   };
@@ -53,6 +54,7 @@ const Header = () => {
 
   const handleGetQuoteClick = () => {
     setIsMobileMenuOpen(false);
+    setIsMobileAboutOpen(false);
     navigate('/contact?quote=true');
   };
 
@@ -60,70 +62,59 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-2.5 sm:py-4 bg-[#0a0b0e]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
-          : 'py-3.5 sm:py-6 bg-transparent'
+          ? 'bg-[#0a0b0e]/95 backdrop-blur-md border-b border-white/10 shadow-lg py-3'
+          : 'bg-transparent border-b border-white/5 py-4'
       }`}
-      style={{
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-      }}
     >
       <div className="container flex items-center justify-between">
-        {/* Brand Logo and Name */}
-        <Link 
+        {/* Brand Logo */}
+        <Link
           to="/"
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 group focus:outline-none"
           onClick={handleMobileNavClick}
         >
-          <Logo size={46} className="transform group-hover:scale-105 transition-transform duration-300" />
+          <Logo size={40} />
           <div className="flex flex-col">
-            <span className="font-extrabold text-lg tracking-wider text-white font-outfit uppercase leading-tight">
+            <span className="font-extrabold text-base tracking-wider text-white uppercase leading-tight font-outfit">
               Al-Marsoos
             </span>
-            <span className="hidden sm:block text-[10px] tracking-[0.2em] font-semibold text-[#d32f2f] uppercase leading-none font-outfit">
+            <span className="text-[9px] tracking-[0.2em] font-semibold text-[#d32f2f] uppercase leading-none font-outfit">
               Security Services
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => {
             if (link.isDropdown) {
-              const isSubActive = link.subLinks.some(sub => location.pathname === sub.path);
+              const isSubActive = isLinkActive(link);
               return (
-                <div key={link.id} className="relative group py-2">
+                <div key={link.id} className="relative group/dropdown py-2">
                   <button
-                    type="button"
-                    className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide py-1 font-outfit transition-all duration-200 cursor-pointer group/dropdown ${
-                      isSubActive ? 'text-white' : 'text-slate-400 hover:text-white'
+                    className={`flex items-center gap-1 text-sm font-semibold transition-colors uppercase tracking-wider font-outfit ${
+                      isSubActive ? 'text-[#d32f2f]' : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     <span>{link.label}</span>
-                    <ChevronDown size={14} className="opacity-70 group-hover:rotate-180 transition-transform duration-300" />
-                    {/* Hover underline — only when no sub-page active */}
-                    {!isSubActive && (
-                      <span className="absolute bottom-0 left-0 h-[2px] bg-[#d32f2f]/60 rounded-full w-0 group-hover/dropdown:w-full transition-all duration-300" />
-                    )}
-                    {/* Active underline when a sub-page is active */}
-                    {isSubActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full" />
-                    )}
+                    <ChevronDown size={14} className="group-hover/dropdown:rotate-180 transition-transform duration-200" />
                   </button>
-                  {/* Dropdown Menu Wrapper (Continuous hover target without gap) */}
-                  <div className="absolute top-full left-0 pt-1.5 w-64 hidden group-hover:block animate-fade-in z-50">
-                    <div className="bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2">
-                      {link.subLinks.map((sub) => (
-                        <Link
-                          key={sub.id}
-                          to={sub.path}
-                          className={`dropdown-item w-full text-left px-4 py-3 text-xs font-medium font-outfit transition-all duration-200 block ${
-                            location.pathname === sub.path ? 'active text-white' : 'text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
+
+                  {/* Dropdown Menu */}
+                  <div className="absolute top-full left-0 w-56 bg-[#11131c] border border-white/10 rounded-md shadow-2xl py-2 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-200 translate-y-2 group-hover/dropdown:translate-y-0 backdrop-blur-md">
+                    {link.subLinks.map((sub) => (
+                      <Link
+                        key={sub.id}
+                        to={sub.path}
+                        className={`block px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors dropdown-item ${
+                          location.pathname === sub.path
+                            ? 'text-white active'
+                            : 'text-slate-300'
+                        }`}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               );
@@ -135,8 +126,8 @@ const Header = () => {
               <Link
                 key={link.id}
                 to={link.path}
-                className={`relative text-sm font-semibold tracking-wide transition-all duration-200 py-1 font-outfit group/nav ${
-                  active ? 'text-white' : 'text-slate-400 hover:text-white'
+                className={`text-sm font-semibold transition-colors uppercase tracking-wider font-outfit relative py-2 group/nav ${
+                  active ? 'text-[#d32f2f]' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {link.label}
@@ -144,7 +135,7 @@ const Header = () => {
                 {active && (
                   <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#d32f2f] shadow-[0_0_8px_#d32f2f] rounded-full animate-fade-in" />
                 )}
-                {/* Hover underline — only when not active */}
+                {/* Hover underline */}
                 {!active && (
                   <span className="absolute bottom-0 left-0 h-[2px] bg-[#d32f2f]/60 rounded-full w-0 group-hover/nav:w-full transition-all duration-300" />
                 )}
@@ -153,12 +144,17 @@ const Header = () => {
           })}
         </nav>
 
-        {/* Action Button & Contact info */}
-        <div className="hidden lg:flex items-center gap-6">
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-300 select-all">
-            <Phone size={14} className="text-[#d32f2f]" />
-            <span>0310 6460024</span>
-          </div>
+        {/* Action Button & WhatsApp Messaging */}
+        <div className="hidden lg:flex items-center gap-4">
+          <a
+            href={getWhatsAppUrl('923106460024', 'Hello Al-Marsoos Security, I would like to inquire about your security services.')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white transition-all group px-3.5 py-2 rounded-sm bg-white/5 hover:bg-[#25D366]/15 border border-white/10 hover:border-[#25D366]/40"
+          >
+            <MessageCircle size={15} className="text-[#25D366] group-hover:scale-110 transition-transform" />
+            <span>WhatsApp: 0310 6460024</span>
+          </a>
           <button
             onClick={handleGetQuoteClick}
             className="btn btn-primary px-5 py-2 text-xs uppercase tracking-wider rounded-sm flex items-center gap-1.5"
@@ -180,13 +176,12 @@ const Header = () => {
       {/* Mobile Drawer Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 top-[60px] bg-[#0a0b0e] z-40 flex flex-col p-6 animate-fade-in md:hidden border-t border-white/5 overflow-y-auto"
-          style={{ height: 'calc(100vh - 60px)' }}
+          className="fixed inset-0 top-[70px] bg-[#0a0b0e] z-40 flex flex-col p-6 animate-fade-in md:hidden border-t border-white/5 overflow-y-auto"
         >
           <div className="flex flex-col gap-5 mt-4">
             {navLinks.map((link) => {
               if (link.isDropdown) {
-                const isSubActive = link.subLinks.some(sub => location.pathname === sub.path);
+                const isSubActive = isLinkActive(link);
                 return (
                   <div key={link.id} className="flex flex-col gap-2">
                     <button
@@ -219,7 +214,6 @@ const Header = () => {
               }
 
               const active = isLinkActive(link);
-
               return (
                 <Link
                   key={link.id}
@@ -239,11 +233,13 @@ const Header = () => {
 
           <div className="mt-8 flex flex-col gap-4 pb-12">
             <a
-              href="tel:03106460024"
-              className="flex items-center justify-center gap-2 p-3 bg-white/5 border border-white/10 rounded-sm text-sm font-semibold hover:bg-white/10 transition-colors"
+              href={getWhatsAppUrl('923106460024', 'Hello Al-Marsoos Security, I would like to inquire about your security services.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-3 bg-[#25D366]/15 border border-[#25D366]/30 rounded-sm text-sm font-semibold text-white hover:bg-[#25D366]/25 transition-colors"
             >
-              <Phone size={16} className="text-[#d32f2f]" />
-              <span>Call: 0310 6460024</span>
+              <MessageCircle size={16} className="text-[#25D366]" />
+              <span>WhatsApp: 0310 6460024</span>
             </a>
             <button
               onClick={handleGetQuoteClick}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Eye, ShieldAlert, Star, Compass, PhoneCall } from 'lucide-react';
+import { Shield, Eye, ShieldAlert, Star, Compass, MessageCircle } from 'lucide-react';
+import { getWhatsAppUrl } from '../utils/device';
 import heroGuard from '../assets/hero_guard.jpg';
 import eventSecurity from '../assets/event_security.jpg';
 import residentialSecurity from '../assets/residential_security.jpg';
@@ -150,24 +151,26 @@ const Services = () => {
               ))}
               </div>
 
-              {/* Sidebar Quick Call Info */}
+              {/* Sidebar Quick Consultation Info */}
               <div className="glass-card p-6 mt-8 border border-white/5 flex flex-col gap-4">
                 <h5 className="text-white font-bold text-sm">Need a Customized Contract?</h5>
                 <p className="text-xs text-slate-400 leading-relaxed font-sans">
-                  Speak to Safdar Malik (GM Marketing) for corporate rates, deployment schedules, and security consultations in Islamabad.
+                  Connect with our operations team directly for corporate rates, deployment schedules, and security consultations in Islamabad.
                 </p>
-                {/* Mobile Only (< 640px): Direct Call Button */}
+                {/* WhatsApp Message Button */}
                 <a
-                  href="tel:03106460024"
-                  className="sm:hidden flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all mt-2"
+                  href={getWhatsAppUrl('923106460024', 'Hello Al-Marsoos Security, I would like to request custom contract pricing for your security services.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 p-3 bg-[#25D366] hover:bg-[#20bd5a] rounded-sm text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all mt-2 cursor-pointer"
                 >
-                  <PhoneCall size={14} />
-                  <span>Call: 0310 6460024</span>
+                  <MessageCircle size={15} />
+                  <span>WhatsApp Inquiry</span>
                 </a>
-                {/* Wide Screen (>= 640px): Request Custom Quote Button */}
+                {/* Request Custom Quote Link */}
                 <Link
                   to="/contact?quote=true"
-                  className="hidden sm:flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all mt-2 group"
+                  className="flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-[#d32f2f] rounded-sm text-xs font-semibold text-white border border-white/5 hover:border-transparent transition-all group"
                 >
                   <Shield size={14} className="text-[#d32f2f] group-hover:text-white transition-colors" />
                   <span>Request Custom Quote</span>

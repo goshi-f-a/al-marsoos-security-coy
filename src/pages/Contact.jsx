@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Phone, Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown, ExternalLink, Navigation, CheckCircle2, Smartphone, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Calculator, ShieldCheck, Send, Check, ChevronDown, ExternalLink, Navigation, CheckCircle2, Smartphone, MessageCircle } from 'lucide-react';
 import { isMobileDevice, getWhatsAppUrl, getGsmSmsUrl } from '../utils/device';
 
 const branches = [
@@ -345,11 +345,18 @@ Sent from Al-Marsoos Official Website`;
                   </div>
 
                   <div className="flex gap-4">
-                    <Phone size={20} className="text-[#d32f2f] shrink-0" />
+                    <MessageCircle size={20} className="text-[#25D366] shrink-0" />
                     <div>
-                      <h5 className="text-white font-bold font-outfit text-sm">Phone Hotlines</h5>
+                      <h5 className="text-white font-bold font-outfit text-sm">WhatsApp Messaging</h5>
                       <p className="text-xs text-slate-400 font-sans mt-0.5">
-                        Mobile / WhatsApp: <a href="tel:03106460024" className="text-white hover:text-[#d32f2f] font-medium">0310 6460024</a>
+                        <a
+                          href={getWhatsAppUrl('923106460024', 'Hello Al-Marsoos Security, I would like to inquire about your security services.')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-white hover:text-[#25D366] font-medium transition-colors"
+                        >
+                          WhatsApp: 0310 6460024 (Chat Online &rarr;)
+                        </a>
                       </p>
                     </div>
                   </div>
@@ -359,7 +366,7 @@ Sent from Al-Marsoos Official Website`;
                     <div>
                       <h5 className="text-white font-bold font-outfit text-sm">Email Support</h5>
                       <p className="text-xs text-slate-400 font-sans mt-0.5">
-                        Official Inquiries: <a href="mailto:almarsoos.sec@gmail.com" className="text-white hover:text-[#d32f2f]">almarsoos.sec@gmail.com</a>
+                        Official Inquiries: <a href="mailto:almarsoos.sec@gmail.com" className="text-white hover:text-[#d32f2f] transition-colors">almarsoos.sec@gmail.com</a>
                       </p>
                     </div>
                   </div>
@@ -556,10 +563,10 @@ Sent from Al-Marsoos Official Website`;
                         </div>
                         <h4 className="text-white font-bold text-lg font-outfit uppercase">Inquiry Logged!</h4>
                         <p className="text-slate-300 text-xs font-sans max-w-sm">
-                          Your quote inquiry has been formatted. You can connect directly with our marketing team on WhatsApp, Email, or Phone:
+                          Your quote inquiry has been formatted. You can connect directly with our marketing team on WhatsApp or Email:
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mt-2">
+                        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-2">
                           <a
                             href={getWhatsAppUrl('923106460024', lastSubmittedMessage || 'Hello, I submitted a security quote inquiry.')}
                             target="_blank"
@@ -577,14 +584,6 @@ Sent from Al-Marsoos Official Website`;
                             <Mail size={14} className="text-[#d32f2f]" />
                             <span>Send Email</span>
                           </button>
-                          {/* Mobile Only (< 640px): Direct Call Button */}
-                          <a
-                            href="tel:03106460024"
-                            className="sm:hidden flex-1 py-2.5 px-3 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-white/10 transition-all"
-                          >
-                            <Phone size={14} className="text-[#d32f2f]" />
-                            <span>Direct Hotline</span>
-                          </a>
                         </div>
 
                         <button
@@ -847,10 +846,16 @@ Sent from Al-Marsoos Official Website`;
 
                     {selectedBranch.phone && (
                       <div className="flex flex-col gap-1">
-                        <span className="text-slate-500 text-[10px] uppercase font-sans text-left">Branch Contacts</span>
-                        <p className="text-slate-300 text-xs font-sans font-semibold text-left">
-                          {selectedBranch.phone}
-                        </p>
+                        <span className="text-slate-500 text-[10px] uppercase font-sans text-left">Branch WhatsApp Messaging</span>
+                        <a
+                          href={getWhatsAppUrl('923106460024', `Hello Al-Marsoos Security, I am inquiring about security deployments in ${selectedBranch.name}.`)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#25D366] hover:underline text-xs font-sans font-semibold text-left flex items-center gap-1.5"
+                        >
+                          <MessageCircle size={13} />
+                          <span>WhatsApp: {selectedBranch.phone} (Message Station)</span>
+                        </a>
                       </div>
                     )}
                   </div>

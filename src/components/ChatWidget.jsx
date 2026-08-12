@@ -43,15 +43,15 @@ const ChatWidget = () => {
       const query = textToSend.toLowerCase();
 
       if (query.includes('quote') || query.includes('price') || query.includes('cost')) {
-        responseText = 'We would love to provide a customized quote! You can fill out our interactive Quote Calculator on the Contact Us page, or speak to our Sales representative directly at 0310 6460024.';
+        responseText = 'We would love to provide a customized quote! You can fill out our interactive Quote Calculator on the Contact Us page, or message our team directly on WhatsApp at 0310 6460024.';
       } else if (query.includes('job') || query.includes('career') || query.includes('apply') || query.includes('work') || query.includes('guard')) {
         responseText = 'We are always looking for dedicated security professionals! Please navigate to our Careers tab to apply online, or send your application to almarsoos.sec@gmail.com.';
       } else if (query.includes('safdar') || query.includes('malik') || query.includes('marketing') || query.includes('manager')) {
-        responseText = 'You can reach Mr. Safdar Malik (General Manager Marketing) directly on mobile / WhatsApp at 0310 6460024 or write to almarsoos.sec@gmail.com.';
+        responseText = 'You can reach Mr. Safdar Malik (General Manager Marketing) directly on WhatsApp at 0310 6460024 or write to almarsoos.sec@gmail.com.';
       } else if (query.includes('location') || query.includes('address') || query.includes('office') || query.includes('islamabad')) {
         responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. You can view our location on Google Maps: https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9 or visit during business hours (9 AM - 5 PM).';
       } else {
-        responseText = 'Thank you for your message. Your safety is our mission. For urgent inquiries, please call or WhatsApp us at 0310 6460024, or email almarsoos.sec@gmail.com.';
+        responseText = 'Thank you for your message. Your safety is our mission. For instant assistance, please message us on WhatsApp at 0310 6460024, or email almarsoos.sec@gmail.com.';
       }
 
       setMessages((prev) => [

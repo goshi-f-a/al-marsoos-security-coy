@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
-import { Phone, Mail, MapPin, Shield, CheckCircle } from 'lucide-react';
+import { MessageCircle, Mail, MapPin, Shield, CheckCircle } from 'lucide-react';
+import { getWhatsAppUrl } from '../utils/device';
 
 const Footer = () => {
   return (
@@ -124,14 +125,20 @@ const Footer = () => {
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <Phone size={16} className="text-[#d32f2f] shrink-0" />
-              <div className="flex flex-col">
-                <a href="tel:03106460024" className="hover:text-white font-medium">0310 6460024</a>
-              </div>
+              <MessageCircle size={16} className="text-[#25D366] shrink-0" />
+              <a
+                href={getWhatsAppUrl('923106460024', 'Hello Al-Marsoos Security, I would like to inquire about your security services.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white font-medium flex items-center gap-1.5 group transition-colors text-slate-300"
+              >
+                <span>WhatsApp: 0310 6460024</span>
+                <span className="text-[10px] text-[#25D366] group-hover:underline font-semibold">(Chat Now &rarr;)</span>
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail size={16} className="text-[#d32f2f] shrink-0" />
-              <a href="mailto:almarsoos.sec@gmail.com" className="hover:text-white">almarsoos.sec@gmail.com</a>
+              <a href="mailto:almarsoos.sec@gmail.com" className="hover:text-white transition-colors">almarsoos.sec@gmail.com</a>
             </li>
           </ul>
         </div>
