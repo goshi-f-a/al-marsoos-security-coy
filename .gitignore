@@ -26,5 +26,9 @@ dist-ssr
 # Private Marketing & Appointment Documents
 *.docx
 *.doc
+/Marketing Material/
+/Marketing Material/**
 Marketing Material/
-Marketing Material
+Marketing Material/**
+Marketing\ Material/
+Marketing\ Material/**
