@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { MessageSquare, X, Send, ShieldCheck } from 'lucide-react';
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -70,16 +68,8 @@ const ChatWidget = () => {
   const handleQuickAction = (actionType) => {
     if (actionType === 'quote') {
       handleSendMessage('I need a security quote.');
-      setTimeout(() => {
-        navigate('/contact?quote=true');
-        setIsOpen(false);
-      }, 2500);
     } else if (actionType === 'careers') {
       handleSendMessage('How can I apply for a security guard job?');
-      setTimeout(() => {
-        navigate('/careers');
-        setIsOpen(false);
-      }, 2500);
     } else if (actionType === 'marketing') {
       handleSendMessage('I want to contact the Marketing Manager.');
     }
