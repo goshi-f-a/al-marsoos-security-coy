@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { UserCheck, BookOpen, Scale, Check, Shield, Mail, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../utils/device';
 
 const Careers = () => {
+  const [searchParams] = useSearchParams();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -14,6 +16,18 @@ const Careers = () => {
     bio: ''
   });
   const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get('apply') === 'true') {
+      setIsFormOpen(true);
+      setTimeout(() => {
+        const formElement = document.getElementById('recruitment-form-container');
+        if (formElement) {
+          formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+    }
+  }, [searchParams]);
 
   const activeJobs = [
     {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { MessageSquare, X, Send, ShieldCheck } from 'lucide-react';
 
 const ChatWidget = () => {
@@ -21,6 +22,54 @@ const ChatWidget = () => {
     }
   }, [messages, isTyping]);
 
+  const renderMessageContent = (text) => {
+    const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(text.substring(lastIndex, match.index));
+      }
+      const linkText = match[1];
+      const linkUrl = match[2];
+
+      if (linkUrl.startsWith('/')) {
+        parts.push(
+          <Link
+            key={match.index}
+            to={linkUrl}
+            className="text-[#d32f2f] hover:underline font-bold inline-flex items-center gap-0.5 mx-0.5 group"
+          >
+            <span>{linkText}</span>
+            <span className="text-[10px] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+          </Link>
+        );
+      } else {
+        parts.push(
+          <a
+            key={match.index}
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#d32f2f] hover:underline font-bold inline-flex items-center gap-0.5 mx-0.5 group"
+          >
+            <span>{linkText}</span>
+            <span className="text-[10px] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+          </a>
+        );
+      }
+      lastIndex = regex.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(text.substring(lastIndex));
+    }
+
+    return parts.length > 0 ? parts : text;
+  };
+
   const handleSendMessage = (textToSend) => {
     if (!textToSend.trim()) return;
 
@@ -40,16 +89,16 @@ const ChatWidget = () => {
       let responseText = '';
       const query = textToSend.toLowerCase();
 
-      if (query.includes('quote') || query.includes('price') || query.includes('cost')) {
-        responseText = 'We would love to provide a customized quote! You can fill out our interactive Quote Calculator on the Contact Us page, message our team directly on WhatsApp at 0310 6460024, or email almarsoos.sec@gmail.com.';
+      if (query.includes('quote') || query.includes('price') || query.includes('cost') || query.includes('estimator')) {
+        responseText = 'We would love to provide a customized quote! You can use our [Instant Security Estimator](/contact?quote=true) on the Contact Us page to calculate exact deployment rates and submit your inquiry directly.';
       } else if (query.includes('job') || query.includes('career') || query.includes('apply') || query.includes('work') || query.includes('guard')) {
-        responseText = 'We are always looking for dedicated security professionals! Please navigate to our Careers tab to apply online, or send your application to almarsoos.sec@gmail.com.';
+        responseText = 'We are always looking for dedicated security professionals! Please open our [Online Recruitment & Vetting Form](/careers?apply=true) to apply directly for security guard and supervisory positions.';
       } else if (query.includes('safdar') || query.includes('malik') || query.includes('marketing') || query.includes('manager')) {
         responseText = 'You can reach Mr. Safdar Malik (General Manager Marketing) directly on WhatsApp at 0330 2051221.';
       } else if (query.includes('location') || query.includes('address') || query.includes('office') || query.includes('islamabad')) {
-        responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. You can view our location on Google Maps: https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9 or visit during business hours (9 AM - 5 PM).';
+        responseText = 'Our head office is located at Office # 1, Gillani Plaza, Motorway Chowk, Peshawar Road, Islamabad. You can [View on Google Maps](https://maps.app.goo.gl/qgc9Wy4KhRToyGZa9) or visit during business hours (9 AM - 5 PM).';
       } else {
-        responseText = 'Thank you for your message. Your safety is our mission. For instant assistance, please message us on WhatsApp at 0310 6460024, or email almarsoos.sec@gmail.com.';
+        responseText = 'Thank you for your message. Your safety is our mission. You can calculate custom pricing using our [Instant Security Estimator](/contact?quote=true) or message us on WhatsApp at 0310 6460024.';
       }
 
       setMessages((prev) => [
@@ -111,7 +160,7 @@ const ChatWidget = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-slate-400 hover:text-white transition-colors cursor-pointer"
             >
               <X size={18} />
             </button>
@@ -122,18 +171,18 @@ const ChatWidget = () => {
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex flex-col max-w-[80%] ${
+                className={`flex flex-col max-w-[85%] ${
                   msg.sender === 'user' ? 'ml-auto items-end' : 'mr-auto items-start'
                 }`}
               >
                 <div
-                  className={`p-3 rounded-lg text-sm ${
+                  className={`p-3 rounded-lg text-xs leading-relaxed ${
                     msg.sender === 'user'
                       ? 'bg-[#d32f2f] text-white rounded-br-none'
                       : 'bg-[#1e2230] text-slate-200 rounded-bl-none border border-white/5'
                   }`}
                 >
-                  {msg.text}
+                  {renderMessageContent(msg.text)}
                 </div>
                 <span className="text-[9px] text-slate-500 mt-1">{msg.time}</span>
               </div>
