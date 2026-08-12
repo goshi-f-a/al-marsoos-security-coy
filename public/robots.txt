@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://goshi-f-a.github.io/al-marsoos-security-coy/sitemap.xml
