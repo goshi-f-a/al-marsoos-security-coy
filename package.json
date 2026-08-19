@@ -6,7 +6,7 @@
   "homepage": "https://goshi-f-a.github.io/al-marsoos-security-coy",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/postbuild.js",
     "lint": "oxlint",
     "preview": "vite preview",
     "predeploy": "npm run build",
