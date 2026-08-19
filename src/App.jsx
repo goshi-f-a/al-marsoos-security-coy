@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import CeoMessage from './pages/CeoMessage';
 import Leadership from './pages/Leadership';
 import Credentials from './pages/Credentials';
+import Clients from './pages/Clients';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/ceo-message" element={<CeoMessage />} />
           <Route path="/leadership" element={<Leadership />} />
           <Route path="/credentials" element={<Credentials />} />
+          <Route path="/clients" element={<Clients />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Navigate to="/" replace />} />
